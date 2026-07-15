@@ -1,0 +1,642 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Countryside QMS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;600;700&family=Syne:wght@500;600;700;800&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#1b1b1e; --surface:#232429; --surface-2:#2e3440;
+    --fg:#f1eff0; --muted:#a9a9a9; --border:rgba(255,255,255,0.09);
+    --accent:#e2be66; --success:#3ecf8e; --warn:#e8a13d; --danger:#ef5f6b;
+    --shadow:0 12px 36px rgba(0,0,0,0.4);
+    --font-display:'Syne',sans-serif;
+    --font-body:-apple-system,BlinkMacSystemFont,'Segoe UI',system-ui,sans-serif;
+    --font-mono:'DM Mono',ui-monospace,Menlo,monospace;
+    --rail:222px;
+  }
+  html[data-theme="light"]{
+    --bg:#f4f3f5; --surface:#ffffff; --surface-2:#eceaee;
+    --fg:#1b1b1e; --muted:#6b6f76; --border:rgba(27,27,30,0.10);
+    --shadow:0 12px 30px rgba(27,27,30,0.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{background:var(--bg);color:var(--fg);font-family:var(--font-body);font-size:14px;line-height:1.5;
+    -webkit-font-smoothing:antialiased;display:grid;grid-template-columns:var(--rail) 1fr;grid-template-rows:100vh}
+  .mono,.num{font-family:var(--font-mono);font-variant-numeric:tabular-nums}
+  input[type=checkbox]{accent-color:var(--accent);width:15px;height:15px;cursor:pointer}
+
+  .sidebar{background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;overflow-y:auto}
+  .brand{display:flex;align-items:center;gap:11px;padding:18px 16px 14px}
+  .brand .mark{width:34px;height:34px;border-radius:9px;flex:0 0 auto;background:#161619;border:1px solid var(--border);
+    display:grid;place-items:center;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.3)}
+  .brand .mark img{width:100%;height:100%;object-fit:contain;display:block}
+  .brand b{font-family:'Cinzel',Georgia,serif;font-weight:600;font-size:14px;letter-spacing:.08em;text-transform:uppercase;line-height:1.05;display:block}
+  .brand small{display:block;color:var(--accent);font-family:'Cinzel',Georgia,serif;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;margin-top:3px}
+  .navgroup{padding:6px 12px 2px}
+  .navgroup>span{display:block;padding:12px 8px 6px;color:var(--muted);font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700}
+  .nav-item{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:8px 10px;border-radius:9px;color:var(--muted);
+    cursor:pointer;border:0;background:none;font-family:var(--font-body);font-size:13.5px;font-weight:500;transition:background .12s,color .12s}
+  .nav-item svg{width:17px;height:17px;flex:0 0 auto}
+  .nav-item:hover{background:var(--surface-2);color:var(--fg)}
+  .nav-item.active{background:color-mix(in oklab,var(--accent) 16%,transparent);color:var(--fg)}
+  .nav-item.active svg{color:var(--accent)}
+  .nav-item .cnt{margin-left:auto;font-family:var(--font-mono);font-size:11px;color:var(--muted)}
+  .sidebar-foot{margin-top:auto;padding:12px 14px;border-top:1px solid var(--border)}
+  .who{display:flex;align-items:center;gap:9px;margin-bottom:9px}
+  .who .ava{width:28px;height:28px;border-radius:50%;background:var(--surface-2);display:grid;place-items:center;font-weight:700;font-size:12px;color:var(--accent);flex:0 0 auto}
+  .who b{font-size:12.5px;font-weight:600;display:block;line-height:1.2}
+  .who small{font-size:10px;color:var(--muted)}
+  .erplink{display:flex;align-items:center;gap:7px;width:100%;padding:8px 10px;border-radius:9px;border:1px solid var(--border);
+    background:var(--surface-2);color:var(--fg);font-size:12.5px;font-weight:600;text-decoration:none}
+  .erplink:hover{border-color:color-mix(in oklab,var(--accent) 40%,transparent)}
+  .erplink svg{width:15px;height:15px;color:var(--accent)}
+
+  .main{overflow-y:auto;height:100vh}
+  .topbar{position:sticky;top:0;z-index:20;display:flex;align-items:center;gap:14px;padding:14px 30px;
+    background:color-mix(in oklab,var(--bg) 82%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--border)}
+  .topbar h1{font-family:var(--font-display);font-weight:700;font-size:19px;letter-spacing:-.01em}
+  .topbar .crumb{color:var(--muted);font-size:12px;letter-spacing:.04em}
+  .topbar .spacer{flex:1}
+  .conpill{display:inline-flex;align-items:center;gap:7px;font-size:11.5px;font-weight:600;color:var(--success);
+    background:color-mix(in oklab,var(--success) 13%,transparent);border:1px solid color-mix(in oklab,var(--success) 26%,transparent);
+    border-radius:999px;padding:5px 11px}
+  .conpill .dot{width:6px;height:6px;border-radius:50%;background:var(--success)}
+  .icon-btn{width:34px;height:34px;border-radius:9px;border:1px solid var(--border);background:var(--surface);color:var(--muted);cursor:pointer;display:grid;place-items:center}
+  .icon-btn:hover{color:var(--fg)}.icon-btn svg{width:16px;height:16px}
+
+  .page{padding:26px 30px 60px;max-width:1400px}
+  .view{display:none}.view.active{display:block;animation:fade .25s ease}
+  @keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+  .page-head{display:flex;align-items:flex-end;gap:16px;margin-bottom:20px;flex-wrap:wrap}
+  .page-head .title{font-family:var(--font-display);font-weight:700;font-size:26px;letter-spacing:-.02em}
+  .page-head .sub{color:var(--muted);font-size:13px;margin-top:3px}
+  .page-head .spacer{flex:1}
+  .demo-pill{display:inline-flex;align-items:center;gap:6px;font-size:11px;letter-spacing:.06em;color:var(--warn);
+    background:color-mix(in oklab,var(--warn) 14%,transparent);border:1px solid color-mix(in oklab,var(--warn) 30%,transparent);border-radius:999px;padding:4px 10px;font-weight:600}
+  .demo-pill .dot{width:6px;height:6px;border-radius:50%;background:var(--warn)}
+
+  .btn{display:inline-flex;align-items:center;gap:7px;padding:8px 14px;border-radius:9px;border:1px solid var(--border);
+    background:var(--surface);color:var(--fg);cursor:pointer;font-family:var(--font-body);font-size:13px;font-weight:600;text-decoration:none}
+  .btn svg{width:15px;height:15px}
+  .btn.primary{background:var(--accent);border-color:var(--accent);color:#1b1b1e}
+  .btn:hover{border-color:color-mix(in oklab,var(--fg) 24%,transparent)}
+  .btn.primary:hover{filter:brightness(1.06)}
+  .btn.sm{padding:4px 10px;font-size:11.5px}
+
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-bottom:24px}
+  @media(max-width:1080px){.kpis{grid-template-columns:repeat(2,1fr)}}
+  .kpi{background:var(--surface);border:1px solid var(--border);border-radius:13px;padding:16px 18px}
+  .kpi .k{color:var(--muted);font-size:11px;letter-spacing:.12em;text-transform:uppercase;font-weight:700}
+  .kpi .v{font-family:var(--font-mono);font-size:27px;font-weight:500;margin-top:9px;letter-spacing:-.01em}
+  .kpi .m{margin-top:6px;font-size:12px;color:var(--muted)}
+  .up{color:var(--success)}.down{color:var(--danger)}.warnc{color:var(--warn)}
+
+  .grid2{display:grid;grid-template-columns:1.5fr 1fr;gap:18px}
+  @media(max-width:1000px){.grid2{grid-template-columns:1fr}}
+  .card{background:var(--surface);border:1px solid var(--border);border-radius:14px;overflow:hidden}
+  .card-h{display:flex;align-items:center;gap:10px;padding:15px 18px;border-bottom:1px solid var(--border)}
+  .card-h h3{font-family:var(--font-display);font-weight:700;font-size:15px}
+  .card-h .spacer{flex:1}
+  .card-h .crumb{color:var(--muted);font-size:12px}
+  .card-b{padding:16px 18px}
+
+  table{width:100%;border-collapse:collapse;font-size:13px}
+  thead th{text-align:left;padding:11px 14px;color:var(--muted);font-size:10.5px;letter-spacing:.12em;text-transform:uppercase;font-weight:700;
+    border-bottom:1px solid var(--border);position:sticky;top:0;background:var(--surface);z-index:2}
+  tbody td{padding:11px 14px;border-bottom:1px solid var(--border)}
+  tbody tr:last-child td{border-bottom:0}
+  tbody tr:hover{background:var(--surface-2)}
+  td.r,th.r{text-align:right}
+  .empty{padding:30px;text-align:center;color:var(--muted);font-size:13px}
+
+  .chip{display:inline-flex;align-items:center;gap:6px;padding:3px 9px;border-radius:999px;font-size:11.5px;font-weight:600;border:1px solid transparent}
+  .chip .cd{width:6px;height:6px;border-radius:50%}
+  .chip.ok{color:var(--success);background:color-mix(in oklab,var(--success) 13%,transparent);border-color:color-mix(in oklab,var(--success) 26%,transparent)}
+  .chip.ok .cd{background:var(--success)}
+  .chip.warn{color:var(--warn);background:color-mix(in oklab,var(--warn) 13%,transparent);border-color:color-mix(in oklab,var(--warn) 26%,transparent)}
+  .chip.warn .cd{background:var(--warn)}
+  .chip.bad{color:var(--danger);background:color-mix(in oklab,var(--danger) 13%,transparent);border-color:color-mix(in oklab,var(--danger) 26%,transparent)}
+  .chip.bad .cd{background:var(--danger)}
+  .chip.acc{color:var(--accent);background:color-mix(in oklab,var(--accent) 14%,transparent);border-color:color-mix(in oklab,var(--accent) 30%,transparent)}
+  .chip.acc .cd{background:var(--accent)}
+  .chip.neutral{color:var(--muted);background:var(--surface-2);border-color:var(--border)}
+  .chip.neutral .cd{background:var(--muted)}
+
+  .toolbar{display:flex;align-items:center;gap:10px;margin-bottom:16px;flex-wrap:wrap}
+  .field{display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:9px;padding:7px 11px}
+  .field svg{width:15px;height:15px;color:var(--muted)}
+  .field input{border:0;background:none;color:var(--fg);font-family:var(--font-body);font-size:13px;outline:none;width:200px}
+  /* Segmented pill boxes — prominent, gold active pill (matches the ERP) */
+  .seg{display:inline-flex;background:var(--surface-2);border:1px solid color-mix(in oklab,var(--accent) 22%,var(--border));border-radius:11px;padding:4px;gap:3px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.02)}
+  .seg button{border:0;background:none;color:var(--muted);padding:9px 16px;border-radius:8px;cursor:pointer;font-family:var(--font-body);font-size:13px;font-weight:600;letter-spacing:.01em;transition:background .12s,color .12s}
+  .seg button:hover:not(.on){color:var(--fg);background:color-mix(in oklab,var(--fg) 7%,transparent)}
+  .seg button.on{background:var(--accent);color:#1b1b1e;font-weight:700;box-shadow:0 2px 10px color-mix(in oklab,var(--accent) 45%,transparent)}
+  .ibtn{width:28px;height:28px;border:1px solid var(--border);background:var(--surface);border-radius:7px;color:var(--muted);cursor:pointer;display:inline-grid;place-items:center;margin-right:5px}
+  .ibtn:hover{color:var(--fg);border-color:color-mix(in oklab,var(--fg) 24%,transparent)}.ibtn svg{width:14px;height:14px}
+
+  .modal-back{position:fixed;inset:0;background:rgba(0,0,0,.55);backdrop-filter:blur(3px);z-index:120;display:none}
+  .modal-back.on{display:block}
+  .modal{position:fixed;left:50%;top:11vh;transform:translateX(-50%);width:min(540px,94vw);z-index:121;background:var(--surface);
+    border:1px solid var(--border);border-radius:16px;box-shadow:var(--shadow);display:none;overflow:hidden}
+  .modal.on{display:block}
+  .modal-h{display:flex;align-items:center;padding:16px 20px;border-bottom:1px solid var(--border)}
+  .modal-h h3{font-family:var(--font-display);font-weight:700;font-size:16px}
+  .modal-b{padding:18px 20px;display:grid;gap:12px;max-height:64vh;overflow-y:auto}
+  .modal-f{display:flex;gap:10px;justify-content:flex-end;padding:14px 20px;border-top:1px solid var(--border)}
+  .cfg{display:flex;flex-direction:column;gap:5px}
+  .cfg span{font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--muted);font-weight:700}
+  .cfg input,.cfg select{background:var(--surface-2);border:1px solid var(--border);border-radius:9px;color:var(--fg);padding:9px 11px;font-family:var(--font-body);font-size:13px;outline:none}
+  .cfg input:focus,.cfg select:focus{border-color:var(--accent)}
+  .split-hint{font-size:12px;color:var(--muted)}
+  .cofoot-l{display:block;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--muted);font-weight:700;margin:2px 0 5px 2px}
+  .cobox{position:relative;margin-bottom:9px}
+  .cobox select{width:100%;appearance:none;-webkit-appearance:none;background:var(--surface-2);border:1px solid var(--border);border-radius:8px;color:var(--fg);padding:8px 30px 8px 11px;font-family:var(--font-body);font-size:12.5px;font-weight:600;cursor:pointer;outline:none}
+  .cobox::after{content:"";position:absolute;right:12px;top:44%;width:6px;height:6px;border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-50%) rotate(45deg);pointer-events:none}
+  .cfg textarea{background:var(--surface-2);border:1px solid var(--border);border-radius:9px;color:var(--fg);padding:9px 11px;font-family:var(--font-body);font-size:13px;outline:none;resize:vertical}
+  .cfg textarea:focus{border-color:var(--accent)}
+  .cfg input[type=file]{padding:7px;font-size:12px}
+  .barcell{display:flex;align-items:center;gap:9px}
+  .bar{flex:1;height:6px;border-radius:99px;background:var(--surface-2);overflow:hidden;min-width:60px}
+  .bar>i{display:block;height:100%;border-radius:99px;background:var(--accent)}
+</style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="brand">
+    <div class="mark"><img src="assets/countryside-logo.png" alt="Countryside Cannabis Co."></div>
+    <div><b>Countryside</b><small>Cannabis Co. · QMS</small></div>
+  </div>
+  <nav class="navgroup">
+    <span>Overview</span>
+    <button class="nav-item active" data-view="dash">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Quality dashboard</button>
+  </nav>
+  <nav class="navgroup">
+    <span>Quality records</span>
+    <button class="nav-item" data-view="deviations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17v.5"/></svg>Deviations & CAPA<span class="cnt" data-cnt="dev"></span></button>
+    <button class="nav-item" data-view="changes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h11l-3-3M20 17H9l3 3"/></svg>Change control<span class="cnt" data-cnt="chg"></span></button>
+    <button class="nav-item" data-view="complaints"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M20 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h13a2 2 0 012 2z"/></svg>Complaints & recalls<span class="cnt" data-cnt="cmp"></span></button>
+    <button class="nav-item" data-view="training"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M6 10v5c0 1.5 3 3 6 3s6-1.5 6-3v-5"/></svg>Training<span class="cnt" data-cnt="trn"></span></button>
+    <button class="nav-item" data-view="audits"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/><path d="M8 11l2 2 4-4"/></svg>Internal audits<span class="cnt" data-cnt="aud"></span></button>
+  </nav>
+
+  <nav class="navgroup">
+    <span>Documents</span>
+    <button class="nav-item" data-view="docs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 2h8l4 4v16H6z"/><path d="M14 2v4h4"/><path d="M9 13h6M9 17h4"/></svg>Document control<span class="cnt" data-cnt="docs"></span></button>
+    <button class="nav-item" data-view="sops"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 4h9l3 3v13H4z"/><path d="M13 4v3h3"/><path d="M8 12h5M8 15h5"/></svg>SOP Library<span class="cnt" data-cnt="sops"></span></button>
+  </nav>
+  <nav class="navgroup">
+    <span>Batch</span>
+    <button class="nav-item" data-view="batch"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 7l9-4 9 4-9 4-9-4z"/><path d="M3 7v10l9 4 9-4V7"/><path d="M9 15l2 2 4-4"/></svg>Batch review & release<span class="cnt" data-cnt="hold"></span></button>
+  </nav>
+  <div class="sidebar-foot">
+    <div class="who"><div class="ava" id="qAva">Q</div><div><b id="qUser">QA Manager</b><small>Quality · HC + GMP</small></div></div>
+    <label class="cofoot-l">Company · HC license</label>
+    <div class="cobox"><select id="coSel" aria-label="Active company"></select></div>
+    <a class="erplink" href="index.html"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg>Open Countryside ERP</a>
+  </div>
+</aside>
+
+<main class="main">
+  <header class="topbar">
+    <h1 id="topTitle">Quality dashboard</h1>
+    <span class="crumb" id="topCrumb">Overview</span>
+    <div class="spacer"></div>
+    <span class="conpill" id="conPill"><span class="dot"></span> Connected to ERP</span>
+    <button class="icon-btn" id="themeBtn" title="Toggle theme"><svg id="themeIcon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/></svg></button>
+  </header>
+
+  <div class="page">
+    <!-- DASHBOARD -->
+    <section class="view active" id="view-dash">
+      <div class="page-head">
+        <div><div class="title">Quality dashboard</div><div class="sub">Countryside Cannabis Co. — Health Canada GPP + GMP quality system</div></div>
+        <div class="spacer"></div>
+        <span class="demo-pill"><span class="dot"></span> SAMPLE DATA · CoAs live from CoA Portal</span>
+      </div>
+      <div class="kpis" id="dashKpis"></div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-h"><h3>Batches awaiting QA release</h3><div class="spacer"></div><button class="btn sm" data-view="batch">Open →</button></div>
+          <div class="table-wrap"><table id="dashBatch"></table></div>
+        </div>
+        <div class="card">
+          <div class="card-h"><h3>Needs attention</h3></div>
+          <div class="card-b" id="dashAttn"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SOP LIBRARY -->
+    <section class="view" id="view-sops">
+      <div class="page-head">
+        <div><div class="title">SOP Library</div><div class="sub">Controlled procedure repository — store, version & open SOPs</div></div>
+        <div class="spacer"></div>
+        <span class="demo-pill"><span class="dot"></span> stored on this device</span>
+        <button class="btn primary" data-sopnew="1"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>Add SOP</button>
+      </div>
+      <div class="toolbar"><div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input id="sopSearch" placeholder="Search SOPs…"></div></div>
+      <div class="card"><div class="table-wrap"><table id="sopTable"></table></div>
+        <div class="card-b" style="border-top:1px solid var(--border)"><div class="split-hint">Attach the SOP file (kept in this browser, ≤ 3 MB) or add a link, then Open / Download from the row. Large files and true multi-user access come with the shared backend.</div></div>
+      </div>
+    </section>
+
+    <!-- GENERIC RECORD VIEWS -->
+    <section class="view" id="view-docs"><div class="page-head"><div><div class="title">Document control</div><div class="sub">SOPs, work instructions, policies & forms — version-controlled</div></div><div class="spacer"></div><button class="btn primary" data-new="docs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>New document</button></div><div class="toolbar"><div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input data-search="docs" placeholder="Search documents…"></div></div><div class="card"><div class="table-wrap"><table data-table="docs"></table></div></div></section>
+    <section class="view" id="view-deviations"><div class="page-head"><div><div class="title">Deviations & CAPA</div><div class="sub">Non-conformances, investigations & corrective/preventive actions</div></div><div class="spacer"></div><button class="btn primary" data-new="deviations"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>New deviation</button></div><div class="toolbar"><div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input data-search="deviations" placeholder="Search deviations…"></div></div><div class="card"><div class="table-wrap"><table data-table="deviations"></table></div></div></section>
+    <section class="view" id="view-changes"><div class="page-head"><div><div class="title">Change control</div><div class="sub">Controlled changes to process, spec, equipment & suppliers</div></div><div class="spacer"></div><button class="btn primary" data-new="changes"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>New change</button></div><div class="toolbar"><div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input data-search="changes" placeholder="Search changes…"></div></div><div class="card"><div class="table-wrap"><table data-table="changes"></table></div></div></section>
+    <section class="view" id="view-complaints"><div class="page-head"><div><div class="title">Complaints & recalls</div><div class="sub">Customer complaints and recall / withdrawal records</div></div><div class="spacer"></div><button class="btn primary" data-new="complaints"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>New record</button></div><div class="toolbar"><div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input data-search="complaints" placeholder="Search complaints…"></div></div><div class="card"><div class="table-wrap"><table data-table="complaints"></table></div></div></section>
+    <section class="view" id="view-training"><div class="page-head"><div><div class="title">Training records</div><div class="sub">Read-and-understood & competency training vs. SOPs</div></div><div class="spacer"></div><button class="btn primary" data-new="training"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>New record</button></div><div class="toolbar"><div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input data-search="training" placeholder="Search training…"></div></div><div class="card"><div class="table-wrap"><table data-table="training"></table></div></div></section>
+    <section class="view" id="view-audits"><div class="page-head"><div><div class="title">Internal audits</div><div class="sub">Self-inspections, findings & audit CAPA</div></div><div class="spacer"></div><button class="btn primary" data-new="audits"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>New audit</button></div><div class="toolbar"><div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input data-search="audits" placeholder="Search audits…"></div></div><div class="card"><div class="table-wrap"><table data-table="audits"></table></div></div></section>
+
+    <!-- BATCH REVIEW & RELEASE -->
+    <section class="view" id="view-batch">
+      <div class="page-head">
+        <div><div class="title">Batch review & release</div><div class="sub">QA disposition by lot — release gates ERP inventory (hold → release)</div></div>
+        <div class="spacer"></div>
+        <span class="demo-pill"><span class="dot"></span> CoA + potency pulled live from CoA Portal</span>
+      </div>
+      <div class="kpis" id="batchKpis"></div>
+      <div class="toolbar">
+        <div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input id="batchSearch" placeholder="Search lot, product…"></div>
+        <div class="seg" id="batchSeg"><button class="on" data-s="">All</button><button data-s="open">Awaiting / hold</button><button data-s="Released">Released</button><button data-s="Rejected">Rejected</button></div>
+      </div>
+      <div class="card"><div class="table-wrap"><table id="batchTable"></table></div>
+        <div class="card-b" style="border-top:1px solid var(--border)"><div class="split-hint">CoA verdict + potency come from the <b>CoA Portal</b> (system of record), matched by lot number. QA disposition writes a shared release status by lot that the ERP reads to hold or free inventory. A batch can't be released while its CoA is out of spec without an override reason.</div></div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<div class="modal-back" id="sopBack"></div>
+<div class="modal" id="sopModal" role="dialog" aria-modal="true">
+  <div class="modal-h"><h3 id="sopTitle">New SOP</h3></div>
+  <div class="modal-b">
+    <label class="cfg"><span>Doc number</span><input id="sop_id" placeholder="SOP-QA-001"></label>
+    <label class="cfg"><span>Title</span><input id="sop_title"></label>
+    <label class="cfg"><span>Version</span><input id="sop_ver" placeholder="1.0"></label>
+    <label class="cfg"><span>Status</span><select id="sop_status"><option>Draft</option><option>In review</option><option>Effective</option><option>Retired</option></select></label>
+    <label class="cfg"><span>Owner</span><input id="sop_owner"></label>
+    <label class="cfg"><span>Company</span><select id="sop_co"><option>Greenleaf</option><option>Harwill</option><option>Sparling</option></select></label>
+    <label class="cfg"><span>Effective date</span><input id="sop_eff" type="date"></label>
+    <label class="cfg"><span>Next review</span><input id="sop_review" type="date"></label>
+    <label class="cfg"><span>Document file (≤ 3 MB)</span><input id="sop_file" type="file"></label>
+    <div id="sopFileName" style="font-size:11.5px;color:var(--muted);margin-top:-4px">No file attached</div>
+    <label class="cfg"><span>…or link (URL / SharePoint)</span><input id="sop_link" placeholder="https://…"></label>
+    <label class="cfg"><span>Summary / scope</span><textarea id="sop_body" rows="3"></textarea></label>
+  </div>
+  <div class="modal-f"><button class="btn" id="sopCancel">Cancel</button><button class="btn primary" id="sopSaveBtn">Save SOP</button></div>
+</div>
+
+<div class="modal-back" id="mBack"></div>
+<div class="modal" id="mModal" role="dialog" aria-modal="true">
+  <div class="modal-h"><h3 id="mTitle">New</h3></div>
+  <div class="modal-b" id="mBody"></div>
+  <div class="modal-f"><button class="btn" id="mCancel">Cancel</button><button class="btn primary" id="mSave">Save</button></div>
+</div>
+
+<script>
+(function(){
+  "use strict";
+  var $=function(s,r){return (r||document).querySelector(s)};
+  var $$=function(s,r){return Array.prototype.slice.call((r||document).querySelectorAll(s))};
+  var esc=function(s){return String(s==null?"":s).replace(/[&<>"]/g,function(c){return {"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;"}[c]})};
+  var TODAY="2026-07-14";
+  var COMPANIES=["Greenleaf","Harwill","Sparling","Countryside"];
+  var CO=(function(){try{var r=localStorage.getItem("mera-erp:co");return COMPANIES.indexOf(r)>=0?r:"Greenleaf"}catch(e){return "Greenleaf"}})();
+  function inCo(r){return !r||!r.co||r.co===CO}
+  function inB(b){return !b||!b.company||b.company===CO}
+  function stampCo(){
+    var lm={};DB.batch.forEach(function(b){if(b.lot)lm[b.lot]=b.company});
+    ["docs","deviations","changes","complaints","training","audits","sops"].forEach(function(k){
+      (DB[k]||[]).forEach(function(r,i){if(!r.co)r.co=(r.lot&&lm[r.lot])?lm[r.lot]:COMPANIES[i%COMPANIES.length]});
+    });
+  }
+
+  /* ---------- ERP connection (same-origin localStorage) ---------- */
+  function erpCoas(){try{var s=localStorage.getItem("mera-erp:coa:data");if(s){var a=JSON.parse(s);if(Array.isArray(a))return a}}catch(e){}return []}
+  function coaFor(lot){var a=erpCoas();for(var i=0;i<a.length;i++)if(a[i].lot===lot)return a[i];return null}
+  function erpUser(){try{var s=localStorage.getItem("mera-erp:access");if(s){var a=JSON.parse(s);var u=(a.users||[]).filter(function(x){return x.name===a.current})[0];if(u)return u}}catch(e){}return null}
+  function releaseMap(){try{return JSON.parse(localStorage.getItem("mera-erp:release")||"{}")}catch(e){return {}}}
+  function setRelease(lot,status){try{var m=releaseMap();m[lot]=status;localStorage.setItem("mera-erp:release",JSON.stringify(m))}catch(e){}}
+
+  /* ---------- QMS data (persisted locally) ---------- */
+  var DB={
+    docs:[
+      {id:"POL-QMS-001",title:"Quality Policy",type:"Policy",ver:"2.0",status:"Effective",owner:"Site Director",eff:"2026-02-01",review:"2028-02-01"},
+      {id:"SOP-QA-001",title:"Batch Record Review & Release",type:"SOP",ver:"3.0",status:"Effective",owner:"QA Manager",eff:"2026-03-01",review:"2027-03-01"},
+      {id:"SOP-PR-014",title:"Pre-Roll Production",type:"SOP",ver:"2.1",status:"Effective",owner:"Production",eff:"2026-01-15",review:"2027-01-15"},
+      {id:"SOP-QC-007",title:"Sampling & CoA Handling",type:"SOP",ver:"1.4",status:"In review",owner:"QA",eff:"2025-11-01",review:"2026-08-01"},
+      {id:"WI-SAN-003",title:"Cleaning & Sanitization",type:"Work instruction",ver:"1.0",status:"Draft",owner:"Facilities",eff:"—",review:"—"}
+    ],
+    deviations:[
+      {id:"DEV-2026-018",title:"OOS microbial — lot S20261120",severity:"Critical",lot:"S20261120",stage:"CAPA",owner:"QA",opened:"2026-07-02",due:"2026-07-20"},
+      {id:"DEV-2026-015",title:"Label mismatch on 10-pack carton",severity:"Major",lot:"FG-PR-1G-10PK",stage:"Investigation",owner:"Production",opened:"2026-06-28",due:"2026-07-15"},
+      {id:"DEV-2026-011",title:"Temperature excursion — vault 2",severity:"Minor",lot:"",stage:"Closed",owner:"Facilities",opened:"2026-06-10",due:"2026-06-24"}
+    ],
+    changes:[
+      {id:"CC-2026-006",title:"New cone supplier qualification",type:"Supplier",risk:"Medium",status:"In review",owner:"QA",opened:"2026-06-20"},
+      {id:"CC-2026-004",title:"Revise pre-roll BOM (tube 116mm)",type:"BOM / spec",risk:"Low",status:"Approved",owner:"Production",opened:"2026-05-30"},
+      {id:"CC-2026-002",title:"New cone-fill production line",type:"Equipment",risk:"High",status:"Implementation",owner:"Engineering",opened:"2026-04-12"}
+    ],
+    complaints:[
+      {id:"REC-2026-001",kind:"Recall",product:"Blue Dream 3.5g",lot:"S30261651",issue:"Precautionary — under assessment",status:"Open",opened:"2026-07-10"},
+      {id:"CMP-2026-009",kind:"Complaint",product:"GREAZY Vape 0.5g",lot:"FG-VP-05-CART",issue:"Hardware — clogged cartridge",status:"Investigation",opened:"2026-07-05"},
+      {id:"CMP-2026-007",kind:"Complaint",product:"Pre-Roll 1g 10pk",lot:"FG-PR-1G-10PK",issue:"Uneven fill weight",status:"Closed",opened:"2026-06-18"}
+    ],
+    training:[
+      {emp:"A. Chen",role:"QA Associate",course:"SOP-QA-001 Batch Release",status:"Complete",due:"2026-05-01"},
+      {emp:"M. Patel",role:"Production Lead",course:"SOP-PR-014 Pre-Roll",status:"Due",due:"2026-07-20"},
+      {emp:"S. Okoro",role:"QA Associate",course:"SOP-QC-007 Sampling",status:"Overdue",due:"2026-06-30"},
+      {emp:"L. Tremblay",role:"Packaging Op",course:"WI-SAN-003 Sanitization",status:"Assigned",due:"2026-08-15"}
+    ],
+    audits:[
+      {id:"AUD-2026-Q2",area:"Production — Harwill",date:"2026-06-15",findings:3,status:"Open"},
+      {id:"AUD-2026-SUP",area:"Supplier — Prairie Biomass",date:"2026-05-05",findings:2,status:"CAPA"},
+      {id:"AUD-2026-Q1",area:"Vault & inventory — Greenleaf",date:"2026-03-10",findings:1,status:"Closed"}
+    ],
+    sops:[
+      {id:"SOP-QA-001",title:"Batch Record Review & Release",ver:"3.0",status:"Effective",owner:"QA Manager",eff:"2026-03-01",review:"2027-03-01",co:"Greenleaf",link:"",body:"Defines QA review of batch records and disposition of finished lots prior to release."},
+      {id:"SOP-PR-014",title:"Pre-Roll Production",ver:"2.1",status:"Effective",owner:"Production",eff:"2026-01-15",review:"2027-01-15",co:"Harwill",link:"",body:"Milling, cone-fill, packaging and labelling of 1g pre-rolls."},
+      {id:"SOP-QC-007",title:"Sampling & CoA Handling",ver:"1.4",status:"In review",owner:"QA",eff:"2025-11-01",review:"2026-08-01",co:"Sparling",link:"",body:"Sampling plan and receipt/verification of certificates of analysis."},
+      {id:"SOP-SAN-003",title:"Cleaning & Sanitization",ver:"1.0",status:"Draft",owner:"Facilities",eff:"—",review:"—",co:"Harwill",link:"",body:"Cleaning frequency, agents and records by production area."}
+    ],
+    batch:[
+      {lot:"FG-VP-05-CART",product:"GREAZY Vape 0.5g",company:"Harwill",qty:"5,000 u",stage:"Awaiting QA"},
+      {lot:"FG-PR-1G-10PK",product:"Pre-Roll 1g · 10-pack",company:"Harwill",qty:"12,000 u",stage:"Under review"},
+      {lot:"EXT-1188",product:"THC Distillate — Bulk",company:"Harwill",qty:"0 kg",stage:"On hold"},
+      {lot:"S20261120",product:"Pineapple Express — Flower",company:"Greenleaf",qty:"140 kg",stage:"Rejected"},
+      {lot:"S30261651",product:"Blue Dream — Fresh Frozen",company:"Sparling",qty:"512 kg",stage:"Released"},
+      {lot:"BIO-4521",product:"Sativa Trim — Extraction",company:"Sparling",qty:"920 kg",stage:"Released"},
+      {lot:"S10251639",product:"Pink Kush — Whole Flower",company:"Greenleaf",qty:"184.5 kg",stage:"Released"}
+    ]
+  };
+  var DBKEY="countryside-qms:db";
+  function loadDb(){try{var s=localStorage.getItem(DBKEY);if(s){var a=JSON.parse(s);if(a&&typeof a==="object")Object.keys(DB).forEach(function(k){if(Array.isArray(a[k]))DB[k]=a[k]})}}catch(e){}}
+  function saveDb(){try{localStorage.setItem(DBKEY,JSON.stringify(DB))}catch(e){}}
+
+  /* ---------- record configs ---------- */
+  var CFG={
+    docs:{singular:"document",key:"id",
+      cols:[{k:"id",h:"Doc no.",mono:1,w:130},{k:"title",h:"Title"},{k:"type",h:"Type",chip:1,w:150},{k:"ver",h:"Ver",mono:1,w:60},{k:"status",h:"Status",status:1,w:120},{k:"owner",h:"Owner",w:130},{k:"review",h:"Next review",mono:1,w:120}],
+      form:[{k:"id",l:"Doc number"},{k:"title",l:"Title"},{k:"type",l:"Type",sel:["SOP","Work instruction","Policy","Form"]},{k:"ver",l:"Version"},{k:"status",l:"Status",sel:["Draft","In review","Effective","Retired"]},{k:"owner",l:"Owner"},{k:"eff",l:"Effective date"},{k:"review",l:"Next review date"}]},
+    deviations:{singular:"deviation",key:"id",
+      cols:[{k:"id",h:"Deviation",mono:1,w:130},{k:"title",h:"Title"},{k:"severity",h:"Severity",status:1,w:100},{k:"lot",h:"Lot",mono:1,w:130},{k:"stage",h:"Stage",status:1,w:120},{k:"owner",h:"Owner",w:110},{k:"due",h:"Due",mono:1,w:110}],
+      form:[{k:"id",l:"Deviation no."},{k:"title",l:"Title"},{k:"severity",l:"Severity",sel:["Critical","Major","Minor"]},{k:"lot",l:"Related lot"},{k:"stage",l:"Stage",sel:["Open","Investigation","CAPA","Closed"]},{k:"owner",l:"Owner"},{k:"opened",l:"Opened"},{k:"due",l:"Due date"}]},
+    changes:{singular:"change",key:"id",
+      cols:[{k:"id",h:"Change",mono:1,w:130},{k:"title",h:"Title"},{k:"type",h:"Type",chip:1,w:130},{k:"risk",h:"Risk",status:1,w:90},{k:"status",h:"Status",status:1,w:130},{k:"owner",h:"Owner",w:120}],
+      form:[{k:"id",l:"Change no."},{k:"title",l:"Title"},{k:"type",l:"Type",sel:["Supplier","BOM / spec","Equipment","Process","Document"]},{k:"risk",l:"Risk",sel:["Low","Medium","High"]},{k:"status",l:"Status",sel:["Draft","In review","Approved","Implementation","Closed"]},{k:"owner",l:"Owner"},{k:"opened",l:"Opened"}]},
+    complaints:{singular:"record",key:"id",
+      cols:[{k:"id",h:"Ref",mono:1,w:130},{k:"kind",h:"Type",chip:1,w:100},{k:"product",h:"Product"},{k:"lot",h:"Lot",mono:1,w:130},{k:"issue",h:"Issue"},{k:"status",h:"Status",status:1,w:120}],
+      form:[{k:"id",l:"Reference"},{k:"kind",l:"Type",sel:["Complaint","Recall"]},{k:"product",l:"Product"},{k:"lot",l:"Lot"},{k:"issue",l:"Issue"},{k:"status",l:"Status",sel:["Open","Investigation","Closed"]},{k:"opened",l:"Opened"}]},
+    training:{singular:"record",key:"emp",
+      cols:[{k:"emp",h:"Employee",w:150},{k:"role",h:"Role",w:150},{k:"course",h:"Course / SOP"},{k:"status",h:"Status",status:1,w:110},{k:"due",h:"Due",mono:1,w:110}],
+      form:[{k:"emp",l:"Employee"},{k:"role",l:"Role"},{k:"course",l:"Course / SOP"},{k:"status",l:"Status",sel:["Assigned","Due","Overdue","Complete"]},{k:"due",l:"Due date"}]},
+    audits:{singular:"audit",key:"id",
+      cols:[{k:"id",h:"Audit",mono:1,w:140},{k:"area",h:"Area / scope"},{k:"date",h:"Date",mono:1,w:120},{k:"findings",h:"Findings",num:1,align:"r",w:100},{k:"status",h:"Status",status:1,w:110}],
+      form:[{k:"id",l:"Audit no."},{k:"area",l:"Area / scope"},{k:"date",l:"Date"},{k:"findings",l:"# Findings",num:1},{k:"status",l:"Status",sel:["Planned","Open","CAPA","Closed"]}]}
+  };
+  function qchip(v){
+    var s=String(v||"");
+    if(/^(effective|complete|released|approved|closed|low)$/i.test(s))return chip("ok",s);
+    if(/^(overdue|on hold|rejected|critical|open|out of spec)$/i.test(s))return chip("bad",s);
+    if(/^(in review|investigation|capa|due|under review|implementation|major|medium|planned|awaiting qa|recall)$/i.test(s))return chip("warn",s);
+    if(/^(draft|assigned|minor|complaint)$/i.test(s))return chip("neutral",s);
+    return chip("neutral",s);
+  }
+  function chip(kind,label){return '<span class="chip '+kind+'"><span class="cd"></span>'+esc(label)+'</span>'}
+  var ICO_EDIT='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20h4L18 10l-4-4L4 16z"/><path d="M14 6l4 4"/></svg>';
+  var ICO_DEL='<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 7h16M9 7V4h6v3M6 7l1 13h10l1-13"/></svg>';
+
+  /* ---------- generic record table ---------- */
+  var filters={};
+  function renderTable(view){
+    var cfg=CFG[view];var arr=DB[view];var q=(filters[view]||"").toLowerCase();
+    var el=$('table[data-table="'+view+'"]');if(!el)return;
+    var rows=arr.map(function(r,i){return {r:r,i:i}}).filter(function(o){
+      if(!inCo(o.r))return false;
+      if(!q)return true;var hay=cfg.cols.map(function(c){return o.r[c.k]}).join(" ").toLowerCase();return hay.indexOf(q)>=0;
+    });
+    var head='<thead><tr>'+cfg.cols.map(function(c){return '<th'+(c.align==="r"?' class="r"':'')+(c.w?' style="width:'+c.w+'px"':'')+'>'+esc(c.h)+'</th>'}).join('')+'<th style="width:84px">Actions</th></tr></thead>';
+    var body=rows.map(function(o){
+      var r=o.r;
+      var tds=cfg.cols.map(function(c){var v=r[c.k];
+        if(c.status)return '<td>'+qchip(v)+'</td>';
+        if(c.chip)return '<td>'+chip("neutral",v==null||v===""?"—":v)+'</td>';
+        if(c.num)return '<td class="r num">'+(v==null?"—":v)+'</td>';
+        return '<td'+(c.mono?' class="mono"':'')+'>'+esc(v==null||v===""?"—":v)+'</td>';
+      }).join('');
+      return '<tr>'+tds+'<td><button class="ibtn" data-edit="'+view+'|'+o.i+'" title="Edit">'+ICO_EDIT+'</button><button class="ibtn" data-del="'+view+'|'+o.i+'" title="Delete">'+ICO_DEL+'</button></td></tr>';
+    }).join('');
+    el.innerHTML=head+'<tbody>'+(body||'<tr><td colspan="'+(cfg.cols.length+1)+'" class="empty">No records — add one.</td></tr>')+'</tbody>';
+  }
+
+  /* ---------- generic modal ---------- */
+  var mView=null,mIdx=null;
+  function openModal(view,i){
+    mView=view;mIdx=(i==null?null:i);var cfg=CFG[view];var r=(i==null)?{}:DB[view][i];
+    $("#mTitle").textContent=(i==null?"New ":"Edit ")+cfg.singular;
+    $("#mBody").innerHTML=cfg.form.map(function(f){var val=(r[f.k]==null?"":r[f.k]);
+      if(f.sel)return '<label class="cfg"><span>'+esc(f.l)+'</span><select id="f_'+f.k+'">'+f.sel.map(function(o){return '<option'+(String(val)===o?' selected':'')+'>'+esc(o)+'</option>'}).join('')+'</select></label>';
+      return '<label class="cfg"><span>'+esc(f.l)+'</span><input id="f_'+f.k+'"'+(f.num?' inputmode="numeric"':'')+' value="'+esc(String(val))+'"></label>';
+    }).join('');
+    $("#mModal").classList.add("on");$("#mBack").classList.add("on");var f0=$("#f_"+cfg.form[0].k);if(f0)f0.focus();
+  }
+  function closeModal(){$("#mModal").classList.remove("on");$("#mBack").classList.remove("on")}
+  function saveModal(){
+    var cfg=CFG[mView];var obj=(mIdx==null)?{}:Object.assign({},DB[mView][mIdx]);
+    cfg.form.forEach(function(f){var el=$("#f_"+f.k);if(!el)return;var v=el.value;if(f.num){v=String(v).replace(/[^0-9.]/g,"");v=(v===""?0:+v)}else{v=v.trim()}obj[f.k]=v});
+    var kf=cfg.form[0].k;if(!obj[kf]){var e0=$("#f_"+kf);if(e0)e0.focus();return}
+    if(mIdx==null&&!obj.co)obj.co=CO;
+    if(mIdx==null)DB[mView].unshift(obj);else DB[mView][mIdx]=obj;
+    saveDb();closeModal();renderTable(mView);renderCounts();renderDash();
+  }
+  function deleteRec(view,i){if(window.confirm("Delete this "+CFG[view].singular+"?")){DB[view].splice(i,1);saveDb();renderTable(view);renderCounts();renderDash()}}
+
+  /* ---------- batch review & release ---------- */
+  var batchFilter="",batchSt="";
+  function batchOpen(s){return s==="Awaiting QA"||s==="Under review"||s==="On hold"}
+  function verdictChip(lot){var c=coaFor(lot);if(!c)return '<span class="chip neutral"><span class="cd"></span>No CoA</span>';return c.st==="bad"?chip("bad","Out of spec"):c.st==="await"?chip("warn","Awaiting"):chip("ok","In spec")}
+  function potencyText(lot){var c=coaFor(lot);if(!c)return "";var p=function(v){return v==null?"—":(+v).toFixed(1)+"%"};return '<div class="mono" style="font-size:11px;color:var(--muted);margin-top:3px">'+p(c.thc)+' THC · '+p(c.cbd)+' CBD</div>'}
+  function renderBatch(){
+    var arr=DB.batch;var scoped=arr.filter(inB);
+    var awaiting=scoped.filter(function(b){return batchOpen(b.stage)}).length;
+    var released=scoped.filter(function(b){return b.stage==="Released"}).length;
+    var rejected=scoped.filter(function(b){return b.stage==="Rejected"}).length;
+    var oos=scoped.filter(function(b){var c=coaFor(b.lot);return c&&c.st==="bad"}).length;
+    function tile(k,v,m){return '<div class="kpi"><div class="k">'+k+'</div><div class="v">'+v+'</div><div class="m">'+m+'</div></div>'}
+    $("#batchKpis").innerHTML=tile("Awaiting release",awaiting,"on QA hold")+tile("Released",released,"free in ERP")+tile("Rejected",rejected,rejected?'<span class="down">quarantined</span>':"none")+tile("CoA out of spec",oos,oos?'<span class="down">cannot release</span>':"all passing");
+    var rows=arr.map(function(b,i){return {b:b,i:i}}).filter(function(o){
+      if(!inB(o.b))return false;
+      if(batchSt==="open"){if(!batchOpen(o.b.stage))return false}else if(batchSt&&o.b.stage!==batchSt)return false;
+      if(batchFilter){var q=batchFilter.toLowerCase();if((o.b.lot+" "+o.b.product+" "+o.b.company).toLowerCase().indexOf(q)<0)return false}
+      return true;
+    });
+    var body=rows.map(function(o){var b=o.b;
+      var canRelease=b.stage!=="Released";
+      var acts='<button class="btn sm" data-rel="'+o.i+'|Released" '+(b.stage==="Released"?'disabled style="opacity:.4"':'')+'>Release</button> '
+        +'<button class="btn sm" data-rel="'+o.i+'|On hold" style="margin-left:4px">Hold</button> '
+        +'<button class="btn sm" data-rel="'+o.i+'|Rejected" style="margin-left:4px">Reject</button>';
+      return '<tr><td class="mono">'+esc(b.lot)+'</td><td>'+esc(b.product)+'</td><td>'+chip("neutral",b.company)+'</td><td class="num">'+esc(b.qty)+'</td>'
+        +'<td>'+verdictChip(b.lot)+potencyText(b.lot)+'</td><td>'+qchip(b.stage)+'</td><td>'+acts+'</td></tr>';
+    }).join('');
+    $("#batchTable").innerHTML='<thead><tr><th style="width:150px">Lot</th><th>Product</th><th style="width:110px">Company</th><th class="r" style="width:100px">Qty</th><th style="width:120px">CoA verdict</th><th style="width:130px">Disposition</th><th style="width:230px">QA action</th></tr></thead>'
+      +'<tbody>'+(body||'<tr><td colspan="7" class="empty">No batches match.</td></tr>')+'</tbody>';
+  }
+  function disposition(i,status){
+    var b=DB.batch[i];if(!b)return;
+    if(status==="Released"){var c=coaFor(b.lot);
+      if(!c){if(!window.confirm("No CoA found in the ERP for "+b.lot+". Release anyway?"))return}
+      else if(c.st==="bad"){if(!window.confirm("CoA for "+b.lot+" is OUT OF SPEC. Releasing requires a documented override. Continue?"))return}
+    }
+    b.stage=status;setRelease(b.lot,status);saveDb();renderBatch();renderCounts();renderDash();
+  }
+
+  /* ---------- dashboard ---------- */
+  function renderDash(){
+    var dev=DB.deviations.filter(inCo),docs=DB.docs.filter(inCo),trn=DB.training.filter(inCo),aud=DB.audits.filter(inCo),cmp=DB.complaints.filter(inCo),bat=DB.batch.filter(inB);
+    var openDev=dev.filter(function(d){return d.stage!=="Closed"}).length;
+    var capa=dev.filter(function(d){return d.stage==="CAPA"}).length;
+    var docsReview=docs.filter(function(d){return d.status==="In review"||d.status==="Draft"}).length;
+    var holds=bat.filter(function(b){return batchOpen(b.stage)}).length;
+    var trnDue=trn.filter(function(t){return t.status==="Due"||t.status==="Overdue"}).length;
+    var findings=aud.filter(function(a){return a.status==="Open"||a.status==="CAPA"}).reduce(function(s,a){return s+(+a.findings||0)},0);
+    function tile(k,v,m){return '<div class="kpi"><div class="k">'+k+'</div><div class="v">'+v+'</div><div class="m">'+m+'</div></div>'}
+    $("#dashKpis").innerHTML=
+      tile("Open deviations",openDev,'<span class="warnc">'+capa+'</span> in CAPA')+
+      tile("Docs pending",docsReview,"draft / in review")+
+      tile("Batches on hold",holds,holds?'<span class="down">awaiting release</span>':"all released")+
+      tile("Training due",trnDue,"assignments open")+
+      '';
+    // second KPI row via same grid — add open audit findings + complaints
+    var openCmp=cmp.filter(function(c){return c.status!=="Closed"}).length;
+    $("#dashKpis").innerHTML+=tile("Open audit findings",findings,"across active audits")+tile("Open complaints",openCmp,"incl. recalls");
+    // batches table
+    var b=bat.filter(function(x){return batchOpen(x.stage)});
+    $("#dashBatch").innerHTML='<thead><tr><th style="width:150px">Lot</th><th>Product</th><th style="width:120px">CoA</th><th style="width:120px">Disposition</th></tr></thead><tbody>'
+      +(b.map(function(x){return '<tr><td class="mono">'+esc(x.lot)+'</td><td>'+esc(x.product)+'</td><td>'+verdictChip(x.lot)+'</td><td>'+qchip(x.stage)+'</td></tr>'}).join('')||'<tr><td colspan="4" class="empty">No batches awaiting release.</td></tr>')+'</tbody>';
+    // attention
+    var items=[];
+    dev.filter(function(d){return d.severity==="Critical"&&d.stage!=="Closed"}).forEach(function(d){items.push(["bad",d.id,d.title])});
+    trn.filter(function(t){return t.status==="Overdue"}).forEach(function(t){items.push(["bad","Training overdue",t.emp+" — "+t.course])});
+    cmp.filter(function(c){return c.kind==="Recall"&&c.status!=="Closed"}).forEach(function(c){items.push(["bad","Recall "+c.id,c.product+" · "+c.lot])});
+    docs.filter(function(d){return d.status==="In review"}).forEach(function(d){items.push(["warn",d.id,d.title+" — pending approval"])});
+    $("#dashAttn").innerHTML=items.length?items.slice(0,7).map(function(it){return '<div style="display:flex;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid var(--border)"><span class="chip '+it[0]+'" style="flex:0 0 auto"><span class="cd"></span></span><div style="min-width:0"><div style="font-weight:600;font-size:12.5px">'+esc(it[1])+'</div><div style="font-size:11.5px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis">'+esc(it[2])+'</div></div></div>'}).join(''):'<div class="empty">Nothing flagged.</div>';
+  }
+  function renderCounts(){
+    var map={sops:"sops",docs:"docs",dev:"deviations",chg:"changes",cmp:"complaints",trn:"training",aud:"audits"};
+    Object.keys(map).forEach(function(c){var el=$('[data-cnt="'+c+'"]');if(el)el.textContent=DB[map[c]].filter(inCo).length});
+    var hold=$('[data-cnt="hold"]');if(hold){var n=DB.batch.filter(function(b){return inB(b)&&batchOpen(b.stage)}).length;hold.textContent=n||""}
+  }
+
+  /* ---------- SOP library ---------- */
+  var sopFilter="",sopIdx=null;
+  function renderSops(){
+    var el=$("#sopTable");if(!el)return;var q=sopFilter.toLowerCase();
+    var rows=DB.sops.map(function(r,i){return {r:r,i:i}}).filter(function(o){
+      if(!inCo(o.r))return false;
+      if(!q)return true;return (o.r.id+" "+o.r.title+" "+(o.r.owner||"")).toLowerCase().indexOf(q)>=0;
+    });
+    var body=rows.map(function(o){var r=o.r;var has=r.file||r.link;
+      var doc=has?('<button class="btn sm" data-sopopen="'+o.i+'">Open</button> <button class="btn sm" data-sopdl="'+o.i+'" style="margin-left:4px">Download</button>'):'<span style="color:var(--muted)">—</span>';
+      return '<tr><td class="mono">'+esc(r.id)+'</td><td>'+esc(r.title)+'</td><td class="mono">'+esc(r.ver||"—")+'</td><td>'+qchip(r.status)+'</td><td>'+esc(r.owner||"—")+'</td>'
+        +'<td>'+doc+'</td><td><button class="ibtn" data-sopedit="'+o.i+'" title="Edit">'+ICO_EDIT+'</button><button class="ibtn" data-sopdel="'+o.i+'" title="Delete">'+ICO_DEL+'</button></td></tr>';
+    }).join('');
+    el.innerHTML='<thead><tr><th style="width:150px">Doc no.</th><th>Title</th><th style="width:60px">Ver</th><th style="width:120px">Status</th><th style="width:140px">Owner</th><th style="width:190px">Document</th><th style="width:84px">Actions</th></tr></thead>'
+      +'<tbody>'+(body||'<tr><td colspan="7" class="empty">No SOPs stored for this company — click “Add SOP”.</td></tr>')+'</tbody>';
+  }
+  function openSop(i){sopIdx=(i==null?null:i);var r=(i==null)?{}:DB.sops[i];
+    $("#sop_id").value=r.id||"";$("#sop_title").value=r.title||"";$("#sop_ver").value=r.ver||"";$("#sop_status").value=r.status||"Draft";$("#sop_owner").value=r.owner||"";$("#sop_co").value=r.co||CO;
+    $("#sop_eff").value=(r.eff&&r.eff!=="—")?r.eff:"";$("#sop_review").value=(r.review&&r.review!=="—")?r.review:"";$("#sop_link").value=r.link||"";$("#sop_body").value=r.body||"";
+    $("#sop_file").value="";$("#sopFileName").textContent=r.file?("Attached: "+r.file.name):"No file attached";
+    $("#sopTitle").textContent=(i==null?"New SOP":"Edit "+(r.id||"SOP"));
+    $("#sopModal").classList.add("on");$("#sopBack").classList.add("on");$("#sop_id").focus();
+  }
+  function closeSop(){$("#sopModal").classList.remove("on");$("#sopBack").classList.remove("on")}
+  function saveSop(){
+    var id=$("#sop_id").value.trim();if(!id){$("#sop_id").focus();return}
+    var obj=(sopIdx==null)?{}:Object.assign({},DB.sops[sopIdx]);
+    obj.id=id;obj.title=$("#sop_title").value.trim();obj.ver=$("#sop_ver").value.trim();obj.status=$("#sop_status").value;obj.owner=$("#sop_owner").value.trim();
+    obj.co=$("#sop_co").value;obj.eff=$("#sop_eff").value||"—";obj.review=$("#sop_review").value||"—";obj.link=$("#sop_link").value.trim();obj.body=$("#sop_body").value;
+    function commit(){if(sopIdx==null)DB.sops.unshift(obj);else DB.sops[sopIdx]=obj;saveDb();closeSop();renderSops();renderCounts()}
+    var fi=$("#sop_file");
+    if(fi&&fi.files&&fi.files[0]){var f=fi.files[0];
+      if(f.size>3*1024*1024){alert("That file is larger than 3 MB — too big to store in the browser. Add a link instead, or connect the backend for large PDFs.");return}
+      var rd=new FileReader();rd.onload=function(){obj.file={name:f.name,data:rd.result};commit()};rd.readAsDataURL(f);return;
+    }
+    commit();
+  }
+  function deleteSop(i){if(window.confirm("Delete SOP "+(DB.sops[i].id||"")+"?")){DB.sops.splice(i,1);saveDb();renderSops();renderCounts()}}
+  function sopAction(kind,i){var r=DB.sops[i];if(!r)return;var href=r.file?r.file.data:(r.link||"");if(!href){alert("No document attached to this SOP.");return}
+    if(kind==="open"){window.open(href,"_blank")}
+    else{var a=document.createElement("a");a.href=href;a.download=r.file?r.file.name:(r.id+".pdf");document.body.appendChild(a);a.click();a.remove()}
+  }
+  function renderAll(){Object.keys(CFG).forEach(renderTable);renderSops();renderBatch();renderCounts();renderDash()}
+
+  /* ---------- router ---------- */
+  var VIEWS={dash:["Quality dashboard","Overview"],sops:["SOP Library","Documents"],docs:["Document control","Documents"],deviations:["Deviations & CAPA","Quality records"],changes:["Change control","Quality records"],complaints:["Complaints & recalls","Quality records"],training:["Training records","Quality records"],audits:["Internal audits","Quality records"],batch:["Batch review & release","Batch"]};
+  function go(view){
+    if(!VIEWS[view])view="dash";
+    $$(".view").forEach(function(v){v.classList.toggle("active",v.id==="view-"+view)});
+    $$(".nav-item").forEach(function(n){n.classList.toggle("active",n.getAttribute("data-view")===view)});
+    $("#topTitle").textContent=VIEWS[view][0];$("#topCrumb").textContent=VIEWS[view][1];
+    try{localStorage.setItem("countryside-qms:view",view)}catch(e){}
+    document.querySelector(".main").scrollTop=0;
+  }
+
+  /* ---------- theme ---------- */
+  function toggleTheme(){var cur=document.documentElement.getAttribute("data-theme")==="light"?"dark":"light";document.documentElement.setAttribute("data-theme",cur);try{localStorage.setItem("countryside-qms:theme",cur)}catch(e){}syncTheme()}
+  function syncTheme(){var light=document.documentElement.getAttribute("data-theme")==="light";$("#themeIcon").innerHTML=light?'<circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/>':'<path d="M21 12.8A9 9 0 1111.2 3a7 7 0 009.8 9.8z"/>'}
+
+  /* ---------- wire up ---------- */
+  document.addEventListener("click",function(e){
+    var nav=e.target.closest("[data-view]");if(nav){go(nav.getAttribute("data-view"));return}
+    var nw=e.target.closest("[data-new]");if(nw){openModal(nw.getAttribute("data-new"),null);return}
+    var ed=e.target.closest("[data-edit]");if(ed){var p=ed.getAttribute("data-edit").split("|");openModal(p[0],+p[1]);return}
+    var dl=e.target.closest("[data-del]");if(dl){var q=dl.getAttribute("data-del").split("|");deleteRec(q[0],+q[1]);return}
+    var rel=e.target.closest("[data-rel]");if(rel){var s=rel.getAttribute("data-rel").split("|");disposition(+s[0],s[1]);return}
+    var sn=e.target.closest("[data-sopnew]");if(sn){openSop(null);return}
+    var so=e.target.closest("[data-sopopen]");if(so){sopAction("open",+so.getAttribute("data-sopopen"));return}
+    var sd=e.target.closest("[data-sopdl]");if(sd){sopAction("dl",+sd.getAttribute("data-sopdl"));return}
+    var se=e.target.closest("[data-sopedit]");if(se){openSop(+se.getAttribute("data-sopedit"));return}
+    var sx=e.target.closest("[data-sopdel]");if(sx){deleteSop(+sx.getAttribute("data-sopdel"));return}
+  });
+  $$('[data-search]').forEach(function(inp){inp.addEventListener("input",function(){filters[inp.getAttribute("data-search")]=this.value;renderTable(inp.getAttribute("data-search"))})});
+  $("#batchSearch").addEventListener("input",function(){batchFilter=this.value;renderBatch()});
+  $("#batchSeg").addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;$$("#batchSeg button").forEach(function(x){x.classList.toggle("on",x===b)});batchSt=b.getAttribute("data-s");renderBatch()});
+  $("#mCancel").addEventListener("click",closeModal);$("#mBack").addEventListener("click",closeModal);$("#mSave").addEventListener("click",saveModal);
+  $("#themeBtn").addEventListener("click",toggleTheme);
+  $("#sopSearch").addEventListener("input",function(){sopFilter=this.value;renderSops()});
+  $("#sopCancel").addEventListener("click",closeSop);$("#sopBack").addEventListener("click",closeSop);$("#sopSaveBtn").addEventListener("click",saveSop);
+  $("#sop_file").addEventListener("change",function(){var f=this.files&&this.files[0];$("#sopFileName").textContent=f?("Selected: "+f.name):"No file attached"});
+  (function(){var sel=$("#coSel");if(sel){COMPANIES.forEach(function(c){var o=document.createElement("option");o.value=o.textContent=c;sel.appendChild(o)});sel.value=CO;
+    sel.addEventListener("change",function(){CO=this.value;try{localStorage.setItem("mera-erp:co",CO)}catch(e){}renderAll()})}})();
+
+  /* ---------- init ---------- */
+  try{var t=localStorage.getItem("countryside-qms:theme");if(t)document.documentElement.setAttribute("data-theme",t)}catch(e){}
+  syncTheme();
+  loadDb();stampCo();
+  var u=erpUser();if(u){$("#qUser").textContent=u.name;$("#qAva").textContent=(u.name.replace(/[^A-Za-z]/g,"")[0]||"Q")}
+  function updateConPill(){var cp=$("#conPill");if(!cp)return;var n=erpCoas().length;
+    if(n){cp.className="conpill";cp.innerHTML='<span class="dot"></span> CoA Portal · '+n+' lots'}
+    else{cp.className="conpill";cp.style.opacity=".7";cp.innerHTML='<span class="dot"></span> CoA Portal · no CoAs yet'}}
+  updateConPill();
+  renderAll();
+  // Live connection: re-render when the CoA Portal writes CoAs, the ERP writes a release,
+  // or the active company changes — all in another same-origin tab.
+  window.addEventListener("storage",function(e){var k=e&&e.key;
+    if(!k||k==="mera-erp:coa:data"||k==="mera-erp:release"){updateConPill();renderBatch();renderDash();renderCounts()}
+    if(k==="mera-erp:co"){var v=e.newValue;if(COMPANIES.indexOf(v)>=0){CO=v;var s=$("#coSel");if(s)s.value=v;renderAll()}}
+  });
+  var start="dash";try{start=localStorage.getItem("countryside-qms:view")||"dash"}catch(e){}
+  go(start);
+})();
+</script>
+</body>
+</html>
