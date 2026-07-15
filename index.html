@@ -38,7 +38,7 @@
     background:var(--surface);border-right:1px solid var(--border);
     display:flex;flex-direction:column;overflow-y:auto;
   }
-  .brand{display:flex;align-items:center;gap:10px;padding:20px 18px 16px}
+  .brand{display:flex;align-items:center;gap:10px;padding:16px 18px 10px}
   .brand .mark{
     width:34px;height:34px;border-radius:9px;flex:0 0 auto;
     background:#1b1b1e;border:1px solid var(--border);
@@ -55,14 +55,14 @@
     border-right:1.5px solid var(--muted);border-bottom:1.5px solid var(--muted);transform:translateY(-70%) rotate(45deg);pointer-events:none}
   .brand b{font-family:'Cinzel',Georgia,serif;font-weight:600;font-size:15px;letter-spacing:.08em;text-transform:uppercase;line-height:1.05}
   .brand small{display:block;color:var(--accent);font-family:'Cinzel',Georgia,serif;font-size:8.5px;letter-spacing:.22em;text-transform:uppercase;font-weight:600;margin-top:3px}
-  .navgroup{padding:6px 12px 2px}
+  .navgroup{padding:3px 12px 2px}
   .navgroup>span{
-    display:block;padding:12px 8px 6px;color:var(--muted);
+    display:block;padding:9px 8px 4px;color:var(--muted);
     font-size:10px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;
   }
   .nav-item{
     display:flex;align-items:center;gap:10px;width:100%;text-align:left;
-    padding:8px 10px;border-radius:9px;color:var(--muted);cursor:pointer;
+    padding:6.5px 10px;border-radius:9px;color:var(--muted);cursor:pointer;
     border:0;background:none;font-family:var(--font-body);font-size:13.5px;font-weight:500;
     transition:background .12s,color .12s;text-decoration:none;
   }
@@ -317,6 +317,10 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/></svg>
       Dashboard
     </button>
+    <button class="nav-item" data-view="modules">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+      All Apps
+    </button>
   </nav>
 
   <nav class="navgroup">
@@ -329,49 +333,29 @@
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V9l5 3V9l5 3V6l6 4v10z"/></svg>
       Production
     </button>
+    <button class="nav-item" data-view="cultivation">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 22V12M12 12c0-3-2-5-5-5 0 3 2 5 5 5zM12 12c0-3.5 2.5-6 6-6 0 3.5-2.5 6-6 6z"/><path d="M8 22h8"/></svg>
+      Cultivation
+    </button>
   </nav>
 
   <nav class="navgroup">
     <span>Supply Chain</span>
-    <button class="nav-item" data-view="planning">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="7" width="16" height="14" rx="2"/><path d="M9 3h6v4H9zM8 13h8M8 17h5"/></svg>
-      Planning
-    </button>
     <button class="nav-item" data-view="procurement">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/><circle cx="19" cy="18" r="2.4"/></svg>
       Procurement
     </button>
-    <button class="nav-item" data-view="warehouse">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21V9l9-5 9 5v12"/><path d="M7 21v-7h10v7"/><path d="M7 14h10"/></svg>
-      Shipping &amp; Receiving
+    <button class="nav-item" data-view="planning">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="7" width="16" height="14" rx="2"/><path d="M9 3h6v4H9zM8 13h8M8 17h5"/></svg>
+      Planning
     </button>
-    <button class="nav-item" data-view="aged">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>
-      Aged Inventory
-    </button>
-  </nav>
-
-  <nav class="navgroup">
-    <span>Sales</span>
     <button class="nav-item" data-view="sales">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="20" r="1.5"/><circle cx="17" cy="20" r="1.5"/><path d="M3 4h2l2.2 11h9.6L20 7H6"/></svg>
       Sales Orders
     </button>
-  </nav>
-
-  <nav class="navgroup">
-    <span>Finance</span>
-    <button class="nav-item" data-view="finance">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3v18M16 7.5C16 6 14.2 5 12 5s-4 1-4 2.8 1.8 2.6 4 3.2 4 1.4 4 3.2S14.2 19 12 19s-4-1-4-2.5"/></svg>
-      Finance
-    </button>
-  </nav>
-
-  <nav class="navgroup">
-    <span>Compliance</span>
-    <button class="nav-item" data-view="ctls">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 3h6a1 1 0 011 1v1h1a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h1V4a1 1 0 011-1z"/><path d="M9 12l1.8 1.8L15 10"/></svg>
-      CTLS Report
+    <button class="nav-item" data-view="warehouse">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21V9l9-5 9 5v12"/><path d="M7 21v-7h10v7"/><path d="M7 14h10"/></svg>
+      Shipping &amp; Receiving
     </button>
   </nav>
 
@@ -388,7 +372,11 @@
   </nav>
 
   <nav class="navgroup">
-    <span>Admin</span>
+    <span>Admin &amp; Compliance</span>
+    <button class="nav-item" data-view="ctls">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M9 3h6a1 1 0 011 1v1h1a2 2 0 012 2v12a2 2 0 01-2 2H7a2 2 0 01-2-2V7a2 2 0 012-2h1V4a1 1 0 011-1z"/><path d="M9 12l1.8 1.8L15 10"/></svg>
+      CTLS Report
+    </button>
     <button class="nav-item" data-view="company">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 21h18M5 21V7l7-4 7 4v14"/><path d="M9 9h.01M12 9h.01M15 9h.01M9 13h.01M12 13h.01M15 13h.01M10 21v-4h4v4"/></svg>
       Company Info
@@ -396,14 +384,6 @@
     <button class="nav-item" data-view="admin">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3l7 3v5c0 4.5-3 7.5-7 9-4-1.5-7-4.5-7-9V6z"/><circle cx="12" cy="10" r="2.2"/><path d="M8.5 16c.6-2 6.4-2 7 0"/></svg>
       Access Control
-    </button>
-  </nav>
-
-  <nav class="navgroup">
-    <span>Modules</span>
-    <button class="nav-item" data-view="modules">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
-      All Apps
     </button>
   </nav>
 
@@ -598,35 +578,29 @@
       </div>
     </section>
 
-    <!-- ============ AGED INVENTORY ============ -->
-    <section class="view" id="view-aged">
+    <!-- ============ CULTIVATION ============ -->
+    <section class="view" id="view-cultivation">
       <div class="page-head">
         <div>
-          <div class="title">Aged Inventory</div>
-          <div class="sub">Days-on-hand by lot — flags slow-moving, near-expiry &amp; write-off-risk stock</div>
+          <div class="title">Cultivation</div>
+          <div class="sub">Seed-to-dried crop tracking — clone → veg → flower → harvest → dry → trim → sort. Feeds CTLS.</div>
         </div>
         <div class="spacer"></div>
-        <span class="demo-pill"><span class="dot"></span> SAMPLE DATA · age from received date</span>
+        <span class="demo-pill"><span class="dot"></span> SAMPLE DATA · <span id="cultSiteLbl">—</span></span>
+        <button class="btn primary" id="cultNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>New batch</button>
       </div>
-      <div class="kpis" id="agedKpis"></div>
+      <div class="kpis" id="cultKpis"></div>
+      <div class="card" style="margin-bottom:16px"><div class="card-h"><h3>Stage pipeline</h3><div class="spacer"></div><span class="crumb">live batches by stage</span></div>
+        <div class="card-b" id="cultPipe"></div>
+      </div>
       <div class="toolbar">
-        <select class="sel" id="agedSite"><option value="">All sites</option></select>
-        <select class="sel" id="agedCat"><option value="">All categories</option></select>
-        <div class="seg" id="agedBandSeg">
-          <button class="on" data-band="">All ages</button>
-          <button data-band="0">0–30 d</button>
-          <button data-band="31">31–60 d</button>
-          <button data-band="61">61–90 d</button>
-          <button data-band="91">90+ d</button>
-        </div>
+        <div class="field"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="M21 21l-4-4"/></svg><input id="cultSearch" placeholder="Search batch, strain, room…"></div>
+        <div class="seg" id="cultStageSeg"><button class="on" data-cs="">All</button><button data-cs="active">Active</button><button data-cs="Complete">Complete</button></div>
       </div>
-      <div class="card" style="margin-bottom:16px"><div class="card-h"><h3>Aging profile</h3><div class="spacer"></div><span class="crumb">on-hand lots by days held</span></div>
-        <div class="card-b" id="agedBuckets"></div>
+      <div class="card" id="cultListCard"><div class="table-wrap"><table id="cultTable"></table></div>
+        <div class="card-b" style="border-top:1px solid var(--border)"><div class="split-hint">Advancing a batch captures the stage's data (wet weight at harvest, dry weight, final trim) and posts plant counts &amp; weights to <b>CTLS</b>. On <b>Complete</b> the sorted weight becomes a <b>Biomass</b> inventory lot.</div></div>
       </div>
-      <div class="card">
-        <div class="table-wrap"><table id="agedTable"></table></div>
-        <div class="card-b" style="border-top:1px solid var(--border)"><div class="split-hint">Age = today − received date. <b>Shelf life / expiry</b> is shown where the lot maps to an item with a shelf-life value in Master Data. Oldest lots list first. Zero-quantity lots are excluded.</div></div>
-      </div>
+      <div id="cultCard" hidden></div>
     </section>
 
     <!-- ============ SHIPPING & RECEIVING (WAREHOUSE) ============ -->
@@ -721,7 +695,8 @@
         </div>
         <div class="spacer"></div>
         <span class="demo-pill"><span class="dot"></span> SAMPLE DATA — edit or import orders</span>
-        <button class="btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v4H4zM4 10h16v10H4z"/></svg>Intake PO (PDF)</button>
+        <button class="btn" id="soIntake"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h16v4H4zM4 10h16v10H4z"/></svg>Intake PO (PDF)</button>
+        <input type="file" id="soPoFile" accept="application/pdf,.pdf" hidden>
         <button class="btn primary" id="soNew"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>New order</button>
       </div>
 
@@ -749,46 +724,7 @@
     </section>
 
     <!-- ============ FINANCE ============ -->
-    <section class="view" id="view-finance">
-      <div class="page-head">
-        <div>
-          <div class="title">Finance</div>
-          <div class="sub">Payables, production cost, and P&amp;L — QuickBooks is the current system of record</div>
-        </div>
-        <div class="spacer"></div>
-        <span class="chip neutral" id="qbSync"><span class="cd"></span> QuickBooks · system of record</span>
-        <button class="btn" id="qbConnect"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3v18M16 7.5C16 6 14.2 5 12 5s-4 1-4 2.8 1.8 2.6 4 3.2 4 1.4 4 3.2S14.2 19 12 19s-4-1-4-2.5"/></svg>Connect QuickBooks</button>
-      </div>
-
-      <div class="card conn-panel" id="qbConn" hidden>
-        <div class="card-h"><h3>QuickBooks Online</h3><div class="spacer"></div><button class="link" id="qbClose">Close</button></div>
-        <div class="card-b">
-          <p class="split-hint" style="margin-bottom:14px">QuickBooks Online is your current book of record. A live connection needs a one-time OAuth authorization (set up under Settings → Integrations) so the ERP can read the chart of accounts and post A/P and COGS entries. Until then, the figures below are computed live from your ERP <b>Procurement</b> and <b>Production</b> data — labelled ERP-derived, not pulled from QuickBooks.</p>
-          <label class="cfg" style="max-width:420px"><span>Company / Realm name</span><input id="qbCompany" placeholder="Countryside Cannabis Co."></label>
-          <div style="display:flex;gap:10px;margin-top:14px"><button class="btn primary" id="qbSave">Save mapping</button></div>
-        </div>
-      </div>
-
-      <div class="kpis" id="finKpis"></div>
-
-      <div class="grid2">
-        <div class="card">
-          <div class="card-h"><h3>Accounts payable</h3><div class="spacer"></div><button class="btn" id="apNew" style="padding:6px 12px;font-size:12px"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>New PO</button></div>
-          <div class="table-wrap"><table id="apTable"></table></div>
-        </div>
-        <div class="card">
-          <div class="card-h"><h3>Cost summary</h3><div class="spacer"></div><span class="crumb">ERP-derived</span></div>
-          <div class="card-b" id="costSummary"></div>
-        </div>
-      </div>
-
-      <div style="height:18px"></div>
-      <div class="card">
-        <div class="card-h"><h3>Production cost ledger</h3><div class="spacer"></div><span class="crumb">materials + labor + overhead · WIP vs COGS</span></div>
-        <div class="table-wrap"><table id="prodCostTable"></table></div>
-        <div class="card-b" style="border-top:1px solid var(--border)"><div class="split-hint">Planned and in-progress work orders capitalize as WIP (inventory asset); completed work orders book to COGS. These post to the GL once QuickBooks is connected.</div></div>
-      </div>
-    </section>
+    <!-- Finance is now a separate connected app (finance.html) — launched from All Apps. -->
 
     <!-- ============ CTLS REPORT (Health Canada Cannabis Tracking) ============ -->
     <section class="view" id="view-ctls">
@@ -901,6 +837,7 @@
 <div class="modal" id="soModal" role="dialog" aria-modal="true">
   <div class="modal-h"><h3 id="soModalTitle">New sales order</h3></div>
   <div class="modal-b">
+    <div id="soPoNote" class="chip acc" style="display:none;margin-bottom:14px;font-size:11.5px"><span class="cd"></span> <span></span></div>
     <label class="cfg"><span>Customer</span><input id="sof_cust" placeholder="Customer name"></label>
     <label class="cfg"><span>Channel</span><select id="sof_ch"><option>OCS</option><option>AGLC</option><option>MBLL</option><option>Distributor</option></select></label>
     <label class="cfg"><span>Items / SKUs</span><input id="sof_items" placeholder="What's on this order"></label>
@@ -947,13 +884,13 @@
 
   /* ---------- Roles, users & access (prototype UI gate; real enforcement is server-side) ---------- */
   var ALWAYS=["dashboard","modules"]; // never gated
-  var MATRIX=[{v:"inventory",name:"Inventory"},{v:"procurement",name:"Procurement"},{v:"production",name:"Production"},{v:"planning",name:"Planning"},{v:"warehouse",name:"Shipping & Receiving"},{v:"aged",name:"Aged Inventory"},{v:"sales",name:"Sales Orders"},{v:"finance",name:"Finance"},{v:"ctls",name:"CTLS Report"},{v:"master",name:"Master Data"},{v:"vendors",name:"Vendors"},{v:"company",name:"Company Info"},{v:"admin",name:"Access Control"}];
+  var MATRIX=[{v:"inventory",name:"Inventory"},{v:"procurement",name:"Procurement"},{v:"production",name:"Production"},{v:"cultivation",name:"Cultivation"},{v:"planning",name:"Planning"},{v:"warehouse",name:"Shipping & Receiving"},{v:"sales",name:"Sales Orders"},{v:"ctls",name:"CTLS Report"},{v:"master",name:"Master Data"},{v:"vendors",name:"Vendors"},{v:"company",name:"Company Info"},{v:"admin",name:"Access Control"}];
   var ACCESS={
     roles:{
-      "Admin":{views:["inventory","procurement","production","planning","warehouse","aged","master","vendors","sales","finance","ctls","company","admin"]},
-      "Operations":{views:["inventory","procurement","production","planning","warehouse","aged","master","vendors","ctls"]},
+      "Admin":{views:["inventory","procurement","production","cultivation","planning","warehouse","master","vendors","sales","ctls","company","admin"]},
+      "Operations":{views:["inventory","procurement","production","cultivation","planning","warehouse","master","vendors","ctls"]},
       "Sales":{views:["sales","inventory"]},
-      "Finance":{views:["finance","ctls"]},
+      "Finance":{views:["ctls"]},
       "Viewer":{views:["inventory"]}
     },
     users:[{name:"You (Admin)",role:"Admin",co:"Harwill"},{name:"Ops Lead",role:"Operations",co:"Greenleaf"},{name:"Sales Rep",role:"Sales",co:"Sparling"}],
@@ -968,8 +905,11 @@
   function firstAllowed(){if(canView("dashboard"))return "dashboard";for(var i=0;i<MATRIX.length;i++)if(canView(MATRIX[i].v))return MATRIX[i].v;return "dashboard"}
   function syncUserSel(){var sel=$("#userSel");if(!sel)return;sel.innerHTML=ACCESS.users.map(function(u){return '<option'+(u.name===ACCESS.current?' selected':'')+'>'+esc(u.name)+'</option>'}).join('')}
   function applyPerms(){
-    $$(".nav-item[data-view]").forEach(function(n){var v=n.getAttribute("data-view");n.style.display=canView(v)?"":"none"});
+    $$(".nav-item[data-view]").forEach(function(n){var v=n.getAttribute("data-view");
+      var ok=canView(v)&&!(v==="cultivation"&&CULT_SITES.indexOf(CO)<0); // cultivation is Sparling/Countryside only
+      n.style.display=ok?"":"none"});
     $$(".navgroup").forEach(function(g){var items=$$(".nav-item",g);var vis=0;items.forEach(function(x){if(x.style.display!=="none")vis++});if(items.length)g.style.display=vis?"":"none"});
+    if(curView==="cultivation"&&CULT_SITES.indexOf(CO)<0)go(firstAllowed());
     var u=curUser();var av=$("#roleAva"),un=$("#userName"),rn=$("#roleName");
     if(av)av.textContent=(u&&u.name?(u.name.replace(/[^A-Za-z]/g,"")[0]||"?"):"?");
     if(un)un.textContent=u?u.name:"—";if(rn)rn.textContent=u?u.role:"no role";
@@ -1076,6 +1016,18 @@
   // CoA records are databased locally in the ERP (localStorage) and shared across all companies.
 
   var TODAY="2026-07-14";
+  // ---- Cultivation (Sparling & Countryside grow sites) ----
+  var CULT_SITES=["Sparling","Countryside"];
+  var CROP_STAGES=["Clone","Vegetative","Flowering","Harvest","Drying","Trimming","Sorting","Complete"];
+  var GROW_ROOMS=["Propagation","Veg 1","Veg 2","Flower 1","Flower 2","Flower 3","Dry Room","Trim Room"];
+  // Crop batches — sample/editable. plants=live count; wet/dry/trim weights in grams captured on stage advance.
+  var CROP=[
+    {id:"CROP-00001",strain:"Blue Dream",co:"Sparling",room:"Flower 2",stage:"Flowering",plants:96,started:"2026-05-04",wetWeight:null,dryWeight:null,trimWeight:null,outLot:null,notes:""},
+    {id:"CROP-00002",strain:"Pink Kush",co:"Sparling",room:"Veg 1",stage:"Vegetative",plants:128,started:"2026-06-18",wetWeight:null,dryWeight:null,trimWeight:null,outLot:null,notes:""},
+    {id:"CROP-00003",strain:"Sativa Fruit Punch",co:"Sparling",room:"Dry Room",stage:"Drying",plants:72,started:"2026-03-30",wetWeight:118400,dryWeight:null,trimWeight:null,outLot:null,notes:"Harvested 2026-06-28"},
+    {id:"CROP-00004",strain:"Afghan Skunk",co:"Countryside",room:"Flower 1",stage:"Flowering",plants:110,started:"2026-05-12",wetWeight:null,dryWeight:null,trimWeight:null,outLot:null,notes:""},
+    {id:"CROP-00005",strain:"Gasoline Cream",co:"Countryside",room:"Propagation",stage:"Clone",plants:200,started:"2026-07-02",wetWeight:null,dryWeight:null,trimWeight:null,outLot:null,notes:"Rooting"}
+  ];
   var SO_STAGES=["New","Allocated","Picking","Shipped","Invoiced"];
   // Incoming customer sales orders to fulfill (sample/editable).
   var SO=[
@@ -1115,7 +1067,7 @@
     {name:"CoA Portal",desc:"System of record for certificates of analysis. Feeds potency into ERP inventory and QMS batch release by lot number.",icon:"doc",tag:"Standalone",url:COA_PORTAL_URL},
     {v:"sales",name:"Sales Orders",desc:"Incoming customer POs to fulfill — provincial boards & distributors, with A/R rollup.",icon:"cart",tag:"In ERP",live:true},
     {v:"master",name:"Master Data",desc:"Items, BOMs, routings, and cycle times — the ERP's reference data.",icon:"grid",tag:"In ERP",live:true},
-    {v:"finance",name:"Finance",desc:"A/P, A/R, production cost, and COGS — computed from POs + orders + work orders.",icon:"dollar",tag:"In ERP",live:true},
+    {name:"Countryside Finance",desc:"A/P, A/R, production cost & COGS — separate app, live-connected to the ERP by PO / order / work-order.",icon:"dollar",tag:"Connected",url:"finance.html"},
     {name:"BOM Database",desc:"169 finished goods, 755 component lines, where-used lookup.",icon:"factory",tag:"Linked",url:null}
   ];
 
@@ -1238,6 +1190,7 @@
     }).join("");
     var poTable=$("#poTable");
     if(poTable)poTable.innerHTML=head+'<tbody>'+(body||'<tr><td colspan="7" class="empty">No POs match.</td></tr>')+'</tbody>';
+    publishFin();
   }
 
   /* ---- PO create / edit / delete ---- */
@@ -1373,7 +1326,13 @@
   function onCoaStorage(e){var k=e&&e.key;if(!k||k===COA_KEY){loadCoa()}if(!k||k===COA_KEY||k==="mera-erp:release"){renderInventory();if(typeof renderDashboard==="function")renderDashboard()}}
 
   /* ---------------- Finance ---------------- */
+  // Finance is now a separate app (finance.html). Publish PO/SO/WO to the shared
+  // same-origin store so it stays live-connected; absorb PO edits it writes back.
+  function publishFin(){try{localStorage.setItem("mera-erp:fin:data",JSON.stringify({po:PO,so:(typeof SO!=="undefined"?SO:[]),wo:WO}))}catch(e){}}
+  function onFinStorage(e){if(e&&e.key&&e.key!=="mera-erp:fin:data")return;
+    try{var d=JSON.parse(localStorage.getItem("mera-erp:fin:data")||"null");if(d&&Array.isArray(d.po)){PO=d.po;renderPO();if(typeof renderProc==="function")renderProc();if(typeof renderDashboard==="function")renderDashboard()}}catch(err){}}
   function renderFinance(){
+    if(!$("#finKpis"))return; // in-ERP finance view removed — figures live in finance.html
     var openAP=0,overdueAP=0,settled=0;
     PO.forEach(function(r){if(!inCo(r))return;var a=r.amount||0;if(r.st==="Overdue"){overdueAP+=a;openAP+=a}else if(poIsOpen(r.st)){openAP+=a}else{settled+=a}});
     var wip=0,cogs=0;
@@ -1445,7 +1404,7 @@
       var o=x.o,i=x.i;
       var fillColor=o.fill>=100?"var(--success)":o.fill>0?"var(--warn)":"var(--danger)";
       var atEnd=o.stage==="Invoiced";
-      return '<tr><td><span class="ic-link mono" data-soopen="'+esc(o.so)+'">'+esc(o.so)+'</span></td><td>'+esc(o.cust)+'</td><td>'+esc(o.items)+'</td>'
+      return '<tr><td><span class="ic-link mono" data-soopen="'+esc(o.so)+'">'+esc(o.so)+'</span>'+(o.poFile?' <svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="var(--accent)" stroke-width="1.8" style="vertical-align:-2px"><title>PO document: '+esc(o.poFile)+'</title><path d="M21 11l-8.5 8.5a4 4 0 01-6-6L14 5a2.5 2.5 0 014 4l-8 8"/></svg>':'')+'</td><td>'+esc(o.cust)+'</td><td>'+esc(o.items)+'</td>'
         +'<td class="r num">'+fmt(o.units||0)+'</td><td class="r num">'+money(o.value||0)+'</td>'
         +'<td class="mono" style="color:'+(soOverdue(o)?"var(--danger)":"var(--muted)")+'">'+esc(o.due||"—")+'</td>'
         +'<td><div class="barcell"><div class="bar"><i style="width:'+Math.min(100,o.fill||0)+'%;background:'+fillColor+'"></i></div>'
@@ -1456,11 +1415,13 @@
         +'<button class="ibtn" data-sodel="'+i+'" title="Delete order">'+ICO_DEL+'</button></td></tr>';
     }).join("");
     if($("#soTable"))$("#soTable").innerHTML=head+'<tbody>'+(body||'<tr><td colspan="9" class="empty">No orders match these filters.</td></tr>')+'</tbody>';
+    if(typeof publishFin==="function")publishFin();
   }
 
   /* ---- Sales order create / edit / delete / advance ---- */
   var soEditIdx=null;
   function soNextId(){var max=0;SO.forEach(function(o){var m=/(\d+)/.exec(o.so||"");if(m)max=Math.max(max,+m[1])});return "SO-"+(max+1)}
+  var soPoPending=null; // filename of a PO PDF being intaken into a new order
   function openSoModal(i){
     soEditIdx=(i==null?null:i);
     var o=(i==null)?{cust:"",ch:"OCS",items:"",units:"",value:"",due:"",stage:"New"}:SO[i];
@@ -1468,9 +1429,11 @@
     $("#sof_cust").value=o.cust||"";$("#sof_ch").value=o.ch||"OCS";$("#sof_items").value=o.items||"";
     $("#sof_units").value=o.units||"";$("#sof_value").value=o.value||"";
     $("#sof_due").value=(o.due&&o.due!=="—")?o.due:"";$("#sof_stage").value=o.stage||"New";
+    var note=$("#soPoNote");var fn=(i==null)?soPoPending:(o.poFile||null);
+    if(note){if(fn){note.style.display="inline-flex";note.querySelector("span:last-child").textContent="PO document attached: "+fn+" — enter the order details below";}else{note.style.display="none"}}
     $("#soModal").classList.add("on");$("#soBack").classList.add("on");$("#sof_cust").focus();
   }
-  function closeSoModal(){$("#soModal").classList.remove("on");$("#soBack").classList.remove("on")}
+  function closeSoModal(){$("#soModal").classList.remove("on");$("#soBack").classList.remove("on");soPoPending=null}
   function saveSo(){
     var cust=$("#sof_cust").value.trim();if(!cust){$("#sof_cust").focus();return}
     var units=parseInt(String($("#sof_units").value).replace(/[^0-9]/g,""),10);if(isNaN(units))units=0;
@@ -1479,8 +1442,8 @@
     var obj={cust:cust,ch:$("#sof_ch").value,items:$("#sof_items").value.trim(),units:units,value:value,
       due:$("#sof_due").value||"—",stage:stage,fill:soToFulfill(stage)?(stage==="New"?0:100):100};
     obj.co=(soEditIdx==null?CO:(SO[soEditIdx].co||CO));
-    if(soEditIdx==null){obj.so=soNextId();obj.ordered=TODAY;SO.unshift(obj)}
-    else{obj.so=SO[soEditIdx].so;obj.ordered=SO[soEditIdx].ordered||TODAY;SO[soEditIdx]=obj}
+    if(soEditIdx==null){obj.so=soNextId();obj.ordered=TODAY;if(soPoPending)obj.poFile=soPoPending;SO.unshift(obj)}
+    else{obj.so=SO[soEditIdx].so;obj.ordered=SO[soEditIdx].ordered||TODAY;if(SO[soEditIdx].poFile)obj.poFile=SO[soEditIdx].poFile;SO[soEditIdx]=obj}
     closeSoModal();renderSales();renderFinance();
   }
   function deleteSo(i){if(window.confirm("Delete "+SO[i].so+"?")){SO.splice(i,1);renderSales();renderFinance()}}
@@ -2087,6 +2050,8 @@
   };
   // Fixed CTLS bucket display order.
   var CTLS_BUCKETS=[
+    {bucket:"Vegetative cannabis", unit:"#"},
+    {bucket:"Flowering cannabis",  unit:"#"},
     {bucket:"Fresh cannabis",     unit:"kg"},
     {bucket:"Dried cannabis",     unit:"kg"},
     {bucket:"Pure intermediates", unit:"kg"},
@@ -2116,6 +2081,12 @@
         out[m.bucket]+=q;
       }
     });
+    // Live plant counts + fresh-in-drying come from the cultivation module (Sparling/Countryside).
+    if(typeof CROP!=="undefined"){CROP.forEach(function(c){if(!inCo(c))return;
+      if(c.stage==="Clone"||c.stage==="Vegetative")out["Vegetative cannabis"]+=(+c.plants||0);
+      else if(c.stage==="Flowering")out["Flowering cannabis"]+=(+c.plants||0);
+      if((c.stage==="Harvest"||c.stage==="Drying")&&c.wetWeight)out["Fresh cannabis"]+=(+c.wetWeight||0)/1000;
+    });}
     return {vals:out,warn:warn};
   }
   function ctlsNum(v){return (v==null||v==="")?0:(isNaN(+v)?0:+v)}
@@ -2298,17 +2269,16 @@
     inventory:{title:"Inventory",crumb:"Operations"},
     procurement:{title:"Procurement",crumb:"Supply Chain"},
     production:{title:"Production",crumb:"Operations"},
+    cultivation:{title:"Cultivation",crumb:"Operations"},
     planning:{title:"Planning",crumb:"Supply Chain"},
     warehouse:{title:"Shipping & Receiving",crumb:"Supply Chain"},
-    aged:{title:"Aged Inventory",crumb:"Supply Chain"},
     master:{title:"Master Data",crumb:"Master Data"},
-    sales:{title:"Sales Orders",crumb:"Sales"},
-    finance:{title:"Finance",crumb:"Finance"},
-    ctls:{title:"CTLS Report",crumb:"Compliance"},
+    sales:{title:"Sales Orders",crumb:"Supply Chain"},
+    ctls:{title:"CTLS Report",crumb:"Admin & Compliance"},
     vendors:{title:"Vendors",crumb:"Master Data"},
-    company:{title:"Company Information",crumb:"Admin"},
-    admin:{title:"Access Control",crumb:"Admin"},
-    modules:{title:"All Apps",crumb:"Modules"}
+    company:{title:"Company Information",crumb:"Admin & Compliance"},
+    admin:{title:"Access Control",crumb:"Admin & Compliance"},
+    modules:{title:"All Apps",crumb:"Overview"}
   };
   function go(view){
     if(!VIEWS[view])view="dashboard";
@@ -2328,9 +2298,9 @@
     {label:"Inventory",view:"inventory",tag:"View"},
     {label:"Procurement & POs",view:"procurement",tag:"View"},
     {label:"Production",view:"production",tag:"View"},
+    {label:"Cultivation",view:"cultivation",tag:"View"},
     {label:"Planning",view:"planning",tag:"View"},
     {label:"Shipping & Receiving",view:"warehouse",tag:"View"},
-    {label:"Aged Inventory",view:"aged",tag:"View"},
     {label:"Sales Orders",view:"sales",tag:"View"},
     {label:"Master Data",view:"master",tag:"View"},
     {label:"Items",view:"master",md:"items",tag:"Master"},
@@ -2340,13 +2310,13 @@
     {label:"Work Centers",view:"master",md:"workcenters",tag:"Master"},
     {label:"Machine Centers",view:"master",md:"machinecenters",tag:"Master"},
     {label:"Cycle Times",view:"master",md:"cycles",tag:"Master"},
-    {label:"Finance",view:"finance",tag:"View"},
+    {label:"Finance (app)",url:"finance.html",tag:"App"},
     {label:"CTLS Report",view:"ctls",tag:"Compliance"},
     {label:"Export CTLS CSV",view:"ctls",tag:"Action"},
     {label:"Company Information",view:"company",tag:"Admin"},
     {label:"Access Control",view:"admin",tag:"Admin"},
     {label:"New sales order",view:"sales",tag:"Action"},
-    {label:"New purchase order",view:"finance",tag:"Action"},
+    {label:"New purchase order",url:"finance.html",tag:"App"},
     {label:"All Apps",view:"modules",tag:"View"},
     {label:"S&OP Dashboard",url:"https://jeremygagnon.github.io/sop-dashboard/",tag:"App"},
     {label:"Flower Procurement",url:"https://jeremygagnon.github.io/flower-procurement-dashboard/",tag:"App"},
@@ -2427,6 +2397,16 @@
     if(mdCardLink){openItemCard(mdCardLink.getAttribute("data-mdcard"));return}
     var mdBackBtn=e.target.closest("[data-mdback]");
     if(mdBackBtn){closeItemCard();return}
+    var cultOpen=e.target.closest("[data-cultopen]");
+    if(cultOpen){cultCard=cultOpen.getAttribute("data-cultopen");renderCultivation();return}
+    var cultBack=e.target.closest("[data-cultback]");
+    if(cultBack){cultCard=null;renderCultivation();return}
+    var cropAdv=e.target.closest("[data-cropadv]");
+    if(cropAdv){cropAdvance(cropAdv.getAttribute("data-cropadv"));return}
+    var cropDel=e.target.closest("[data-cropdel]");
+    if(cropDel){cropDelete(cropDel.getAttribute("data-cropdel"));return}
+    var cropSaveB=e.target.closest("[data-cropsave]");
+    if(cropSaveB){var cc=cropById(cropSaveB.getAttribute("data-cropsave"));if(cc){$$('#cultCard .cr-f').forEach(function(el){var k=el.getAttribute("data-k");if(k==="plants"){cc.plants=parseInt(String(el.value).replace(/[^0-9]/g,""),10)||0}else{cc[k]=el.value}});cultSyncSide();renderCultivation()}return}
     var whOpen=e.target.closest("[data-whopen]");
     if(whOpen){whCard=whOpen.getAttribute("data-whopen");renderWarehouse();return}
     var whDl=e.target.closest("[data-whdel]");
@@ -2535,6 +2515,8 @@
   // CoA feed (read-only; CoA Portal is the source): pull cross-device, and update live
   // when the Portal (or QMS release) writes to the shared store in another same-origin tab.
   window.addEventListener("storage",onCoaStorage);
+  window.addEventListener("storage",onFinStorage);
+  document.addEventListener("visibilitychange",function(){if(!document.hidden)onFinStorage()});
   setInterval(function(){if(pgOn())coaPull()},45000);
   document.addEventListener("visibilitychange",function(){if(!document.hidden){loadCoa();renderInventory();if(pgOn())coaPull()}});
 
@@ -2661,7 +2643,10 @@
   var apNewBtn=$("#apNew");if(apNewBtn)apNewBtn.addEventListener("click",function(){openPoModal(null)});
 
   // Sales orders: create/edit modal + filters
-  var soNewBtn=$("#soNew");if(soNewBtn)soNewBtn.addEventListener("click",function(){openSoModal(null)});
+  var soNewBtn=$("#soNew");if(soNewBtn)soNewBtn.addEventListener("click",function(){soPoPending=null;openSoModal(null)});
+  var soIntakeBtn=$("#soIntake"),soPoInput=$("#soPoFile");
+  if(soIntakeBtn&&soPoInput){soIntakeBtn.addEventListener("click",function(){soPoInput.value="";soPoInput.click()});
+    soPoInput.addEventListener("change",function(){var f=this.files&&this.files[0];if(!f)return;soPoPending=f.name;openSoModal(null)});}
   $("#soCancel").addEventListener("click",closeSoModal);
   $("#soBack").addEventListener("click",closeSoModal);
   $("#soSaveBtn").addEventListener("click",saveSo);
@@ -2675,17 +2660,7 @@
   $("#poBack").addEventListener("click",closePoModal);
   $("#poSaveBtn").addEventListener("click",savePo);
 
-  // QuickBooks connect (scaffold — company/realm mapping stored locally)
-  $("#qbConnect").addEventListener("click",function(){$("#qbConn").hidden=false});
-  $("#qbClose").addEventListener("click",function(){$("#qbConn").hidden=true});
-  $("#qbSave").addEventListener("click",function(){
-    var c=$("#qbCompany").value.trim();
-    try{localStorage.setItem("mera-erp:qb:company",c)}catch(e){}
-    $("#qbConn").hidden=true;
-    var pip=$("#qbSync");if(pip)pip.innerHTML='<span class="cd"></span> '+(c?esc(c)+" · QuickBooks":"QuickBooks · system of record");
-  });
-  (function(){try{var c=localStorage.getItem("mera-erp:qb:company");if(c){$("#qbCompany").value=c;
-    var pip=$("#qbSync");if(pip)pip.innerHTML='<span class="cd"></span> '+esc(c)+" · QuickBooks"}}catch(e){}})();
+  // QuickBooks now lives in the separate Finance app (finance.html).
 
   // CTLS report — month, per-licence ID, month-end snapshot, movement inputs, CSV export
   var ctlsMo=$("#ctlsMonth");if(ctlsMo){ctlsMo.value=CTLS_MONTH;ctlsMo.addEventListener("change",function(){CTLS_MONTH=this.value||CTLS_MONTH;renderCtls()})}
@@ -2719,12 +2694,9 @@
   });
   var whTabsEl=$("#whTabs");if(whTabsEl)whTabsEl.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;whTab=b.getAttribute("data-wh");whCard=null;whFilter="";var ws=$("#whSearch");if(ws)ws.value="";renderWarehouse()});
   var whNewBtn=$("#whNew");if(whNewBtn)whNewBtn.addEventListener("click",whNew);
-  // Aged Inventory filters
-  (function(){var s=$("#agedSite");if(s)SITES.forEach(function(x){var o=document.createElement("option");o.value=o.textContent=x;s.appendChild(o)});
-    var c=$("#agedCat");if(c)CATS.forEach(function(x){var o=document.createElement("option");o.value=o.textContent=x;c.appendChild(o)});})();
-  var agSite=$("#agedSite");if(agSite)agSite.addEventListener("change",function(){agedFilter.site=this.value;renderAged()});
-  var agCat=$("#agedCat");if(agCat)agCat.addEventListener("change",function(){agedFilter.cat=this.value;renderAged()});
-  var agSeg=$("#agedBandSeg");if(agSeg)agSeg.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;$$("#agedBandSeg button").forEach(function(x){x.classList.toggle("on",x===b)});agedFilter.band=b.getAttribute("data-band");renderAged()});
+  var cultNewBtn=$("#cultNew");if(cultNewBtn)cultNewBtn.addEventListener("click",cropNew);
+  var cultSearchEl=$("#cultSearch");if(cultSearchEl)cultSearchEl.addEventListener("input",function(){cultFilter=this.value;renderCultivation()});
+  var cultSeg=$("#cultStageSeg");if(cultSeg)cultSeg.addEventListener("click",function(e){var b=e.target.closest("button");if(!b)return;$$("#cultStageSeg button").forEach(function(x){x.classList.toggle("on",x===b)});cultStage=b.getAttribute("data-cs");renderCultivation()});
   var whSearchEl=$("#whSearch");if(whSearchEl)whSearchEl.addEventListener("input",function(){whFilter=this.value;renderWarehouse()});
 
   // Company switcher — scopes every module to the selected HC-licensed entity
@@ -2765,6 +2737,8 @@
   function invSubLine(l,site){for(var i=0;i<INV.length;i++){if(INV[i].lot===l.lot&&(!site||INV[i].site===site)){INV[i].qty=Math.max(0,(+INV[i].qty||0)-(+l.qty||0));if(INV[i].qty<=0)INV[i].st="bad";return}}}
   function invCatByLot(lot){for(var i=0;i<INV.length;i++)if(INV[i].lot===lot)return INV[i].cat;return ""}
   function ctlsBump(co,cat,qty,dir){var m=CTLS_MAP[cat];if(!m||!qty)return;var mo=CTLS_MONTH,adj=ctlsGetAdj(co,mo),b=m.bucket;if(!adj[b])adj[b]={};adj[b][dir]=Math.max(0,(+adj[b][dir]||0)+(+qty||0));ctlsSetAdj(co,mo,adj)}
+  // Post a movement straight to a named CTLS bucket (cultivation → Vegetative/Flowering/Fresh/Dried).
+  function ctlsBumpBucket(co,bucket,qty,dir){if(!bucket||!qty)return;var mo=CTLS_MONTH,adj=ctlsGetAdj(co,mo);if(!adj[bucket])adj[bucket]={};adj[bucket][dir]=Math.max(0,(+adj[bucket][dir]||0)+(+qty||0));ctlsSetAdj(co,mo,adj)}
   function relGet(lot){try{return (JSON.parse(localStorage.getItem("mera-erp:release")||"{}"))[lot]||null}catch(e){return null}}
   function relSet(lot,st){try{var m=JSON.parse(localStorage.getItem("mera-erp:release")||"{}");if(st==null)delete m[lot];else m[lot]=st;localStorage.setItem("mera-erp:release",JSON.stringify(m))}catch(e){}}
   function whQaBlock(d){var bad=[];(d.lines||[]).forEach(function(l){if(!l.lot)return;if(relGet(l.lot)!=="Released")bad.push(l.lot+" — "+(relGet(l.lot)||"no QA disposition"))});return bad}
@@ -2774,7 +2748,7 @@
   function whOutbound(d,site,co,reverse){(d.lines||[]).forEach(function(l){var cat=l.cat||invCatByLot(l.lot);
     if(reverse){invAddLine({lot:l.lot,prod:l.prod,cat:cat,qty:l.qty,uom:l.uom},site,co);ctlsBump(co,cat,-(+l.qty||0),"red")}
     else{invSubLine(l,site);ctlsBump(co,cat,(+l.qty||0),"red")}})}
-  function whSync(){renderInventory();if(typeof renderCtls==="function")renderCtls();if(typeof renderDashboard==="function")renderDashboard()}
+  function whSync(){renderInventory();if(typeof renderCtls==="function")renderCtls();if(typeof renderDashboard==="function")renderDashboard();if(typeof publishFin==="function")publishFin()}
   function whAdvance(no){var f=whFind(no);if(!f)return;var d=f.doc,t=f.type,flow=whFlow(d,t),i=Math.max(0,flow.indexOf(d.status));if(i>=flow.length-1)return;var nxt=flow[i+1];
     if(t==="receiving"){if(nxt==="Received"&&!d.posted){whInbound(d,d.site,d.co,false);d.posted=true}}
     else if(t==="shipping"){
@@ -2877,54 +2851,101 @@
       +'</div>';
   }
 
-  /* ================= Aged Inventory ================= */
-  var agedFilter={site:"",cat:"",band:""};
-  var AGED_BANDS=[{k:0,l:"0–30 d",tone:"ok"},{k:31,l:"31–60 d",tone:"ok"},{k:61,l:"61–90 d",tone:"warn"},{k:91,l:"90+ d",tone:"bad"}];
-  function daysHeld(recv){if(!recv)return null;var a=new Date(recv+"T00:00:00"),b=new Date(TODAY+"T00:00:00");if(isNaN(a.getTime()))return null;return Math.max(0,Math.round((b-a)/86400000))}
-  function agedBandOf(d){if(d==null)return null;return d<=30?0:d<=60?31:d<=90?61:91}
-  function renderAged(){
-    if(!$("#agedTable"))return;
-    var rows=INV.filter(function(r){return inCo(r)&&(+r.qty||0)>0}).map(function(r){
-      var age=daysHeld(r.received),it=itemByCode(r.lot);
-      var val=(it&&it.unitCost!=null)?(+r.qty||0)*it.unitCost:null;
-      var dte=null;
-      if(it&&it.shelfLife&&r.received){var e=new Date(r.received+"T00:00:00");e.setDate(e.getDate()+(+it.shelfLife||0));dte=Math.round((e-new Date(TODAY+"T00:00:00"))/86400000)}
-      return {r:r,age:age,band:agedBandOf(age),val:val,dte:dte};
-    });
-    var cnt=rows.length,avg=cnt?Math.round(rows.reduce(function(s,x){return s+(x.age||0)},0)/cnt):0;
-    var old90=rows.filter(function(x){return x.band===91}).length;
-    var expSoon=rows.filter(function(x){return x.dte!=null&&x.dte<=30}).length;
+  /* ================= Cultivation (Sparling & Countryside) ================= */
+  var cultFilter="",cultStage="",cultCard=null;
+  function cropById(id){for(var i=0;i<CROP.length;i++)if(CROP[i].id===id)return CROP[i];return null}
+  function cropNextId(){var mx=0;CROP.forEach(function(c){var m=/(\d+)/.exec(c.id||"");if(m)mx=Math.max(mx,+m[1])});var s=String(mx+1);while(s.length<5)s="0"+s;return "CROP-"+s}
+  function cDiff(a){if(!a)return null;var x=new Date(a+"T00:00:00"),y=new Date(TODAY+"T00:00:00");if(isNaN(x.getTime()))return null;return Math.max(0,Math.round((y-x)/86400000))}
+  function cropWt(c){return c.trimWeight||c.dryWeight||c.wetWeight||0}
+  function cropYield(c){var w=c.trimWeight||c.dryWeight;return (w&&c.plants)?Math.round(w/c.plants):null}
+  function cropLoss(c){return (c.wetWeight&&c.dryWeight)?Math.round((c.wetWeight-c.dryWeight)/c.wetWeight*100):null}
+  function cropStageChip(s){var k=s==="Complete"?"ok":s==="Harvest"||s==="Drying"?"warn":s==="Flowering"?"acc":"neutral";return chip(k,s)}
+  function cultSyncSide(){renderInventory();if(typeof renderCtls==="function")renderCtls();if(typeof renderDashboard==="function")renderDashboard()}
+  function applyCultVis(){var on=CULT_SITES.indexOf(CO)>=0;$$('.nav-item[data-view="cultivation"]').forEach(function(n){n.style.display=(on&&canView("cultivation"))?"":"none"});if(!on&&curView==="cultivation")go(firstAllowed())}
+  function cropAdvance(id){var c=cropById(id);if(!c)return;var i=CROP_STAGES.indexOf(c.stage);if(i<0||i>=CROP_STAGES.length-1)return;var nxt=CROP_STAGES[i+1];
+    if(nxt==="Flowering"){ctlsBumpBucket(c.co,"Vegetative cannabis",c.plants,"red");ctlsBumpBucket(c.co,"Flowering cannabis",c.plants,"add")}
+    else if(nxt==="Harvest"){var w=window.prompt("Harvest WET weight for "+c.id+" — "+c.plants+" plants (grams):","");if(w===null)return;c.wetWeight=+String(w).replace(/[^0-9.]/g,"")||0;ctlsBumpBucket(c.co,"Flowering cannabis",c.plants,"red");ctlsBumpBucket(c.co,"Fresh cannabis",c.wetWeight/1000,"add")}
+    else if(nxt==="Trimming"){var d=window.prompt("DRY weight for "+c.id+" after drying (grams):",String(c.dryWeight||""));if(d===null)return;c.dryWeight=+String(d).replace(/[^0-9.]/g,"")||0;if(c.wetWeight)ctlsBumpBucket(c.co,"Fresh cannabis",c.wetWeight/1000,"red");ctlsBumpBucket(c.co,"Dried cannabis",c.dryWeight/1000,"add")}
+    else if(nxt==="Complete"){var t=window.prompt("Final SORTED / trimmed weight for "+c.id+" (grams):",String(c.dryWeight||""));if(t===null)return;c.trimWeight=+String(t).replace(/[^0-9.]/g,"")||0;
+      var lot=c.id;invAddLine({lot:lot,prod:c.strain+" — Dried (cultivation)",cat:"Biomass",qty:+(c.trimWeight/1000).toFixed(3),uom:"kg"},c.co,c.co);relSet(lot,"On hold");c.outLot=lot;}
+    c.stage=nxt;cultSyncSide();renderCultivation();
+  }
+  function cropNew(){var co=(CULT_SITES.indexOf(CO)>=0?CO:CULT_SITES[0]);var c={id:cropNextId(),strain:"",co:co,room:"Propagation",stage:"Clone",plants:0,started:TODAY,wetWeight:null,dryWeight:null,trimWeight:null,outLot:null,notes:""};CROP.unshift(c);cultCard=c.id;renderCultivation();}
+  function cropDelete(id){var c=cropById(id);if(!c)return;if(c.outLot){if(!window.confirm("This batch already produced inventory lot "+c.outLot+". Delete the batch anyway? (the lot stays in inventory)"))return}else if(!window.confirm("Delete "+id+"?"))return;var idx=CROP.indexOf(c);CROP.splice(idx,1);cultCard=null;cultSyncSide();renderCultivation();}
+  function renderCultivation(){
+    if(!$("#cultTable"))return;
+    $("#cultSiteLbl").textContent=CO;
+    if(CULT_SITES.indexOf(CO)<0){ // cultivation is site-specific
+      $("#cultKpis").innerHTML="";$("#cultPipe").innerHTML="";$("#cultListCard").hidden=false;$("#cultCard").hidden=true;
+      $("#cultTable").innerHTML='<tbody><tr><td class="empty">Cultivation applies to <b>Sparling</b> and <b>Countryside</b>. Switch the company (top-right) to a grow site to manage crops.</td></tr></tbody>';
+      return;
+    }
+    if(cultCard){renderCropCard(cultCard);return}
+    $("#cultListCard").hidden=false;$("#cultCard").hidden=true;
+    var mine=CROP.filter(function(c){return c.co===CO});
+    var active=mine.filter(function(c){return c.stage!=="Complete"});
+    var veg=active.filter(function(c){return c.stage==="Clone"||c.stage==="Vegetative"}).reduce(function(s,c){return s+(+c.plants||0)},0);
+    var flo=active.filter(function(c){return c.stage==="Flowering"}).reduce(function(s,c){return s+(+c.plants||0)},0);
+    var drying=active.filter(function(c){return c.stage==="Harvest"||c.stage==="Drying"||c.stage==="Trimming"||c.stage==="Sorting"}).length;
     function tile(k,v,m){return '<div class="kpi"><div class="k">'+k+'</div><div class="v">'+v+'</div><div class="m">'+m+'</div></div>'}
-    $("#agedKpis").innerHTML=
-      tile("On-hand lots",cnt,"with stock")+
-      tile("Avg days held",avg+" d","across lots")+
-      tile("Aged 90+ days",old90,old90?'<span class="down">review for write-off</span>':"none")+
-      tile("Near / past expiry",expSoon,expSoon?'<span class="down">≤30 d or expired</span>':"none where dated");
-    var maxc=1;AGED_BANDS.forEach(function(b){var c=rows.filter(function(x){return x.band===b.k}).length;if(c>maxc)maxc=c});
-    $("#agedBuckets").innerHTML=AGED_BANDS.map(function(b){var c=rows.filter(function(x){return x.band===b.k}).length;
-      var col=b.tone==="bad"?"var(--danger)":b.tone==="warn"?"var(--warn)":"var(--success)";
-      return '<div style="display:flex;align-items:center;gap:12px;margin:8px 0"><div style="width:74px;font-size:12.5px;color:var(--muted)">'+b.l+'</div>'
-        +'<div class="bar" style="flex:1;max-width:520px"><i style="width:'+Math.round(c/maxc*100)+'%;background:'+col+'"></i></div>'
-        +'<div class="mono" style="width:70px;text-align:right">'+c+' lot'+(c===1?"":"s")+'</div></div>';
+    $("#cultKpis").innerHTML=tile("Active batches",active.length,"in production")+tile("Plants in veg",fmt(veg),"clone + vegetative")+tile("Plants in flower",fmt(flo),"flowering")+tile("Post-harvest",drying,"drying / trim / sort");
+    var stagesLive=CROP_STAGES.slice(0,-1);
+    var maxc=1;stagesLive.forEach(function(st){var n=active.filter(function(c){return c.stage===st}).length;if(n>maxc)maxc=n});
+    $("#cultPipe").innerHTML=stagesLive.map(function(st){var list=active.filter(function(c){return c.stage===st});var n=list.length;var p=list.reduce(function(s,c){return s+(+c.plants||0)},0);
+      return '<div style="display:flex;align-items:center;gap:12px;margin:7px 0"><div style="width:96px;font-size:12.5px;color:var(--muted)">'+st+'</div>'
+        +'<div class="bar" style="flex:1;max-width:460px"><i style="width:'+Math.round(n/maxc*100)+'%;background:var(--accent)"></i></div>'
+        +'<div class="mono" style="width:150px;text-align:right;color:var(--muted)">'+n+' batch'+(n===1?"":"es")+(p?' · '+fmt(p)+' plants':'')+'</div></div>';
     }).join('');
-    var f=agedFilter;
-    var list=rows.filter(function(x){var r=x.r;if(f.site&&r.site!==f.site)return false;if(f.cat&&r.cat!==f.cat)return false;if(f.band!==""&&String(x.band)!==String(f.band))return false;return true;})
-      .sort(function(a,b){return (b.age||0)-(a.age||0)});
-    var head='<thead><tr><th style="width:150px">Lot</th><th>Product</th><th style="width:120px">Category</th><th style="width:96px">Site</th><th class="r" style="width:104px">Qty</th><th style="width:106px">Received</th><th class="r" style="width:74px">Age</th><th style="width:96px">Band</th><th style="width:120px">Expiry</th><th style="width:108px">QA release</th></tr></thead>';
-    var body=list.map(function(x){var r=x.r,bd=AGED_BANDS.filter(function(b){return b.k===x.band})[0]||{l:"—",tone:"neutral"};
-      var ageCol=x.band===91?"var(--danger)":x.band===61?"var(--warn)":"var(--fg)";
-      var expCell=x.dte==null?'<span style="color:var(--muted)">—</span>':(x.dte<0?chip("bad","expired"):x.dte<=30?chip("warn","in "+x.dte+" d"):'<span class="mono" style="color:var(--muted)">in '+x.dte+' d</span>');
-      var rel=relGet(r.lot),qa=rel==="Released"?chip("ok","Released"):rel==="On hold"?chip("warn","On hold"):rel==="Rejected"?chip("bad","Rejected"):'<span style="color:var(--muted)">—</span>';
-      return '<tr><td class="mono">'+esc(r.lot)+'</td><td>'+esc(r.prod)+'</td><td>'+chip("neutral",r.cat)+'</td><td>'+esc(r.site)+'</td>'
-        +'<td class="r num">'+fmt(r.qty)+' <span style="color:var(--muted)">'+esc(r.uom)+'</span></td>'
-        +'<td class="mono" style="color:var(--muted)">'+esc(r.received||"—")+'</td>'
-        +'<td class="r num" style="color:'+ageCol+';font-weight:600">'+(x.age==null?"—":x.age+" d")+'</td>'
-        +'<td>'+chip(bd.tone,bd.l)+'</td><td>'+expCell+'</td><td>'+qa+'</td></tr>';
+    var rows=mine.map(function(c,i){return {c:c,i:i}}).filter(function(o){var c=o.c;
+      if(cultStage==="active"){if(c.stage==="Complete")return false}else if(cultStage&&c.stage!==cultStage)return false;
+      if(cultFilter){if((c.id+" "+c.strain+" "+c.room+" "+c.stage).toLowerCase().indexOf(cultFilter.toLowerCase())<0)return false}return true;});
+    var head='<thead><tr><th style="width:120px">Batch</th><th>Strain</th><th style="width:110px">Room</th><th style="width:110px">Stage</th><th class="r" style="width:80px">Plants</th><th style="width:104px">Started</th><th class="r" style="width:70px">Age</th><th class="r" style="width:110px">Weight</th><th class="r" style="width:96px">g/plant</th></tr></thead>';
+    var body=rows.map(function(o){var c=o.c;var wt=cropWt(c);var yld=cropYield(c);
+      return '<tr><td><span class="ic-link mono" data-cultopen="'+esc(c.id)+'">'+esc(c.id)+'</span></td><td>'+esc(c.strain||"—")+'</td><td>'+esc(c.room||"—")+'</td>'
+        +'<td>'+cropStageChip(c.stage)+'</td><td class="r num">'+fmt(c.plants)+'</td><td class="mono" style="color:var(--muted)">'+esc(c.started||"—")+'</td>'
+        +'<td class="r num">'+(cDiff(c.started)==null?"—":cDiff(c.started)+" d")+'</td>'
+        +'<td class="r num">'+(wt?(wt/1000).toLocaleString(undefined,{maximumFractionDigits:2})+" kg":'<span style="color:var(--muted)">—</span>')+'</td>'
+        +'<td class="r num">'+(yld==null?'<span style="color:var(--muted)">—</span>':yld+" g")+'</td></tr>';
     }).join('');
-    $("#agedTable").innerHTML=head+'<tbody>'+(body||'<tr><td colspan="10" class="empty">No lots match these filters.</td></tr>')+'</tbody>';
+    $("#cultTable").innerHTML=head+'<tbody>'+(body||'<tr><td colspan="9" class="empty">No batches — click New batch.</td></tr>')+'</tbody>';
+  }
+  function renderCropCard(id){
+    var c=cropById(id);if(!c){cultCard=null;renderCultivation();return}
+    $("#cultListCard").hidden=true;$("#cultCard").hidden=false;
+    var i=CROP_STAGES.indexOf(c.stage),done=c.stage==="Complete";
+    var steps=CROP_STAGES.map(function(s,idx){return '<span class="chip '+(idx===i?"acc":"neutral")+'" style="opacity:'+(idx<=i?1:.4)+'">'+esc(s)+'</span>'}).join('<span style="margin:0 4px;color:var(--muted)">→</span>');
+    var wt=cropWt(c),yld=cropYield(c),loss=cropLoss(c);
+    var roomOpts=GROW_ROOMS.map(function(r){return '<option'+(c.room===r?' selected':'')+'>'+esc(r)+'</option>'}).join('');
+    var adv=done?'<span style="color:var(--muted)">Batch complete'+(c.outLot?' → lot <span class="mono">'+esc(c.outLot)+'</span>':'')+'</span>':'<button class="btn primary" data-cropadv="'+esc(c.id)+'"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>Advance to '+esc(CROP_STAGES[i+1])+'</button>';
+    $("#cultCard").innerHTML=
+      '<div class="ic-head">'
+        +'<button class="btn" data-cultback="1"><svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg>Cultivation</button>'
+        +'<div><div style="font-family:var(--font-display);font-weight:700;font-size:22px;letter-spacing:-.01em">'+esc(c.id)+'</div><div style="color:var(--muted);font-size:13px">'+esc(c.strain||"—")+' · '+esc(c.co)+'</div></div>'
+        +'<div style="flex:1"></div>'+cropStageChip(c.stage)
+        +'<button class="btn" data-cropdel="'+esc(c.id)+'" style="margin-left:10px">Delete</button>'
+      +'</div>'
+      +'<div class="card" style="margin-bottom:16px"><div class="card-b"><div style="display:flex;align-items:center;flex-wrap:wrap;gap:5px;font-size:12px;margin-bottom:14px">'+steps+'</div>'
+        +'<div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">'+adv+'</div></div></div>'
+      +'<div class="ic-grid">'
+        +'<div class="card"><div class="card-h"><h3>Batch</h3></div><div class="card-b"><div class="ic-fields">'
+          +'<label class="cfg"><span>Strain</span><input class="cr-f" data-k="strain" value="'+esc(c.strain||"")+'"></label>'
+          +'<label class="cfg"><span>Room / zone</span><select class="cr-f" data-k="room">'+roomOpts+'</select></label>'
+          +'<label class="cfg"><span>Plant count</span><input class="cr-f" data-k="plants" inputmode="numeric" value="'+esc(c.plants||0)+'"></label>'
+          +'<label class="cfg"><span>Started</span><input class="cr-f" data-k="started" type="date" value="'+esc(c.started||"")+'"></label>'
+        +'</div></div></div>'
+        +'<div class="card"><div class="card-h"><h3>Yield &amp; weights</h3><div class="spacer"></div><span class="crumb">grams</span></div><div class="card-b"><dl class="ic-dl">'
+          +'<dt>Wet (harvest)</dt><dd>'+(c.wetWeight?fmt(c.wetWeight)+" g":"—")+'</dd>'
+          +'<dt>Dry</dt><dd>'+(c.dryWeight?fmt(c.dryWeight)+" g":"—")+'</dd>'
+          +'<dt>Sorted / final</dt><dd>'+(c.trimWeight?fmt(c.trimWeight)+" g":"—")+'</dd>'
+          +'<dt>Wet→dry loss</dt><dd'+(loss!=null&&loss>75?' style="color:var(--warn)"':'')+'>'+(loss==null?"—":loss+"%")+'</dd>'
+          +'<dt>Yield / plant</dt><dd>'+(yld==null?"—":yld+" g")+'</dd>'
+          +'<dt>Age</dt><dd>'+(cDiff(c.started)==null?"—":cDiff(c.started)+" days")+'</dd></dl></div></div>'
+      +'</div>'
+      +'<div class="card" style="margin-top:16px"><div class="card-b split-hint">Advancing captures the stage weight and posts to <b>CTLS</b> — plant counts move Vegetative→Flowering, harvest adds Fresh cannabis (kg), drying adds Dried cannabis. On <b>Complete</b> the final weight becomes a quarantined <b>Biomass</b> inventory lot. Edit strain/room/plants above and Save.</div>'
+        +'<div class="card-b" style="border-top:1px solid var(--border);display:flex;gap:8px"><button class="btn primary" data-cropsave="'+esc(c.id)+'">Save batch</button></div></div>';
   }
 
-  function renderAll(){renderDashboard();renderInventory();renderPO();renderProduction();renderPlanning();renderSales();renderProc();renderMaster();renderFinance();renderCtls();renderCompany();renderVendors();renderWarehouse();renderAged();}
+  function renderAll(){renderDashboard();renderInventory();renderPO();renderProduction();renderPlanning();renderSales();renderProc();renderMaster();renderFinance();renderCtls();renderCompany();renderVendors();renderWarehouse();renderCultivation();applyCultVis();}
   (function(){var sel=$("#coSelect");if(sel){COMPANIES.forEach(function(c){var o=document.createElement("option");o.value=o.textContent=c;sel.appendChild(o)});sel.value=CO;
     sel.addEventListener("change",function(){CO=this.value;try{localStorage.setItem("mera-erp:co",CO)}catch(e){}renderAll();});}})();
 
@@ -2935,6 +2956,8 @@
   // Seed the shared CoA store once (labelled sample) so the QMS + inventory show potency
   // in the demo before the CoA Portal is wired. The Portal's live data overrides this.
   try{if(localStorage.getItem(COA_KEY)==null)saveCoaStore()}catch(e){}
+  // Adopt any PO edits the Finance app already saved, so we don't clobber them with the seed.
+  try{var _fd=JSON.parse(localStorage.getItem("mera-erp:fin:data")||"null");if(_fd&&Array.isArray(_fd.po)&&_fd.po.length)PO=_fd.po}catch(e){}
   rebuildCycles();renderAll();renderModules();renderAdmin();
   if(pgOn())coaPull();
   var start="dashboard";try{start=localStorage.getItem("mera-erp:view")||"dashboard"}catch(e){}
